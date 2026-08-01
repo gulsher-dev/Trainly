@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Exercise Library — Trainly</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- ===== NAVBAR (Dynamic Island style) ===== -->
+<header class="nav-wrapper" id="navWrapper">
+  <div class="nav-pill" id="navPill">
+
+    <a href="index.html" class="nav-logo">
+      <span class="logo-dot"></span> Trainly
+    </a>
+
+    <nav class="nav-links">
+      <div class="nav-item" data-menu="plans">
+        <span>PLANS</span>
+        <svg class="chevron" width="10" height="6" viewBox="0 0 10 6"><path d="M1 1L5 5L9 1" stroke="currentColor" stroke-width="1.5" fill="none"/></svg>
+      </div>
+      <div class="nav-item" data-menu="tools">
+        <span>TOOLS</span>
+        <svg class="chevron" width="10" height="6" viewBox="0 0 10 6"><path d="M1 1L5 5L9 1" stroke="currentColor" stroke-width="1.5" fill="none"/></svg>
+      </div>
+      <div class="nav-item" data-menu="library">
+        <span>EXERCISES</span>
+        <svg class="chevron" width="10" height="6" viewBox="0 0 10 6"><path d="M1 1L5 5L9 1" stroke="currentColor" stroke-width="1.5" fill="none"/></svg>
+      </div>
+      <a href="tracker.html" class="nav-item">
+        <span>TRACKER</span>
+      </a>
+    </nav>
+
+    <a href="plans.html" class="nav-cta">START FREE →</a>
+
+    <div class="nav-collapsed-label">
+      <span class="pulse-dot"></span> MENU
+    </div>
+
+  </div>
+
+  <div class="mega-menu" id="megaMenu">
+
+    <div class="mega-panel" data-panel="plans">
+      <div class="mega-head">
+        <span class="mega-eyebrow">PLANS</span>
+        <h2>Train anywhere, zero equipment needed</h2>
+        <p>Structured home workout plans built around your goal and your schedule.</p>
+      </div>
+      <div class="mega-cols">
+        <div class="mega-col">
+          <h4>BY GOAL</h4>
+          <a href="plans.html#fatloss">🔥 Fat Loss</a>
+          <a href="plans.html#musclebuilding">💪 Muscle Building</a>
+          <a href="plans.html#generalfitness">⚡ General Fitness</a>
+          <a href="plans.html#flexibility">🧘 Flexibility & Mobility</a>
+        </div>
+        <div class="mega-col">
+          <h4>BY LEVEL</h4>
+          <a href="plans.html">🌱 Beginner</a>
+          <a href="plans.html">📈 Intermediate</a>
+          <a href="plans.html">🏆 Advanced</a>
+        </div>
+        <div class="mega-col highlight-card">
+          <span class="hc-tag">FEATURED PLAN</span>
+          <div class="hc-number">30</div>
+          <span class="hc-label">DAY FAT LOSS CHALLENGE</span>
+          <a href="plans.html#fatloss" class="hc-link">See Plan →</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="mega-panel" data-panel="tools">
+      <div class="mega-head">
+        <span class="mega-eyebrow">TOOLS</span>
+        <h2>Know your numbers</h2>
+        <p>Free calculators to plan your training and nutrition properly.</p>
+      </div>
+      <div class="mega-cols">
+        <div class="mega-col">
+          <h4>CALCULATORS</h4>
+          <a href="calculators.html#protein">🥩 Protein Calculator</a>
+          <a href="calculators.html#tdee">🔥 Calorie / TDEE Calculator</a>
+          <a href="calculators.html#bmi">⚖️ BMI Calculator</a>
+          <a href="calculators.html#onerep">🏋️ One-Rep Max Calculator</a>
+        </div>
+        <div class="mega-col">
+          <h4>AI POWERED</h4>
+          <a href="#" class="soon-link">🤖 AI Plan Generator <span class="soon-tag">Soon</span></a>
+          <a href="#" class="soon-link">📋 AI Diet Suggestions <span class="soon-tag">Soon</span></a>
+        </div>
+      </div>
+    </div>
+
+    <div class="mega-panel" data-panel="library">
+      <div class="mega-head">
+        <span class="mega-eyebrow">EXERCISES</span>
+        <h2>Every move, explained</h2>
+        <p>Searchable library of home exercises by muscle group.</p>
+      </div>
+      <div class="mega-cols">
+        <div class="mega-col">
+          <h4>MUSCLE GROUPS</h4>
+          <a href="exercises.html#chest">Chest</a>
+          <a href="exercises.html#back">Back</a>
+          <a href="exercises.html#legs">Legs</a>
+          <a href="exercises.html#arms">Arms</a>
+          <a href="exercises.html#core">Core</a>
+          <a href="exercises.html#fullbody">Full Body</a>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</header>
+
+<!-- ===== EXERCISE LIBRARY PAGE CONTENT ===== -->
+<main class="page-content">
+  <div class="page-hero">
+    <span class="section-eyebrow">EXERCISES</span>
+    <h1>Every move, explained</h1>
+    <p>Tap a muscle group, then tap an exercise to see how to do it.</p>
+  </div>
+
+  <div class="muscle-tabs">
+    <div class="muscle-tab active" data-group="chest">Chest</div>
+    <div class="muscle-tab" data-group="back">Back</div>
+    <div class="muscle-tab" data-group="legs">Legs</div>
+    <div class="muscle-tab" data-group="arms">Arms</div>
+    <div class="muscle-tab" data-group="core">Core</div>
+    <div class="muscle-tab" data-group="fullbody">Full Body</div>
+  </div>
+
+  <div class="exercise-group active" id="chest">
+    <div class="exercise-item"><h3>Push-Ups <span class="ex-level">Beginner</span></h3><p>Hands shoulder-width apart, body in a straight line. Lower your chest to the floor, then push back up. Keep your core tight throughout.</p></div>
+    <div class="exercise-item"><h3>Incline Push-Ups <span class="ex-level">Beginner</span></h3><p>Hands on a raised surface (chair, step). Lowers difficulty while still targeting the chest — good starting point.</p></div>
+    <div class="exercise-item"><h3>Diamond Push-Ups <span class="ex-level">Intermediate</span></h3><p>Hands together under your chest forming a diamond shape. Emphasizes inner chest and triceps.</p></div>
+    <div class="exercise-item"><h3>Decline Push-Ups <span class="ex-level">Advanced</span></h3><p>Feet raised on a surface, hands on the floor. Shifts more weight onto the upper chest and shoulders.</p></div>
+  </div>
+
+  <div class="exercise-group" id="back">
+    <div class="exercise-item"><h3>Superman Hold <span class="ex-level">Beginner</span></h3><p>Lie face down, lift arms and legs off the ground simultaneously, hold briefly, then lower. Strengthens the lower back.</p></div>
+    <div class="exercise-item"><h3>Reverse Snow Angels <span class="ex-level">Beginner</span></h3><p>Lie face down, sweep arms from your sides up overhead and back, like a snow angel. Targets upper back and rear delts.</p></div>
+    <div class="exercise-item"><h3>Towel Rows <span class="ex-level">Intermediate</span></h3><p>Loop a towel around a sturdy pole/door, lean back, and pull yourself toward it using your back muscles.</p></div>
+    <div class="exercise-item"><h3>Pull-Ups (doorframe bar) <span class="ex-level">Advanced</span></h3><p>Using a doorframe pull-up bar, pull your chin above the bar with control, then lower slowly.</p></div>
+  </div>
+
+  <div class="exercise-group" id="legs">
+    <div class="exercise-item"><h3>Bodyweight Squats <span class="ex-level">Beginner</span></h3><p>Feet shoulder-width apart, lower your hips back and down like sitting in a chair, then stand back up.</p></div>
+    <div class="exercise-item"><h3>Lunges <span class="ex-level">Beginner</span></h3><p>Step forward, lower your back knee toward the floor, then push back to standing. Alternate legs.</p></div>
+    <div class="exercise-item"><h3>Bulgarian Split Squats <span class="ex-level">Intermediate</span></h3><p>Rear foot elevated on a chair, lower your front knee until it's bent around 90 degrees, then push up.</p></div>
+    <div class="exercise-item"><h3>Jump Squats <span class="ex-level">Advanced</span></h3><p>Perform a squat, then explode upward into a jump, landing softly back into the squat position.</p></div>
+  </div>
+
+  <div class="exercise-group" id="arms">
+    <div class="exercise-item"><h3>Chair Dips <span class="ex-level">Beginner</span></h3><p>Hands on the edge of a sturdy chair, legs extended, lower your body by bending your elbows, then push back up. Targets triceps.</p></div>
+    <div class="exercise-item"><h3>Wall/Table Curls <span class="ex-level">Beginner</span></h3><p>Push against the underside of a sturdy table with your palms up as if curling, holding tension in the biceps.</p></div>
+    <div class="exercise-item"><h3>Pike Push-Ups <span class="ex-level">Intermediate</span></h3><p>Hips raised high forming an inverted V, lower your head toward the floor, then push back up. Targets shoulders and triceps.</p></div>
+    <div class="exercise-item"><h3>Diamond Push-Up Hold <span class="ex-level">Advanced</span></h3><p>Hold the bottom position of a diamond push-up for time to build tricep endurance and strength.</p></div>
+  </div>
+
+  <div class="exercise-group" id="core">
+    <div class="exercise-item"><h3>Plank <span class="ex-level">Beginner</span></h3><p>Forearms and toes on the ground, body in a straight line. Hold, keeping your hips level and core braced.</p></div>
+    <div class="exercise-item"><h3>Dead Bug <span class="ex-level">Beginner</span></h3><p>Lying on your back, extend opposite arm and leg slowly while keeping your lower back pressed to the floor.</p></div>
+    <div class="exercise-item"><h3>Bicycle Crunches <span class="ex-level">Intermediate</span></h3><p>Lying on your back, alternate bringing elbow to opposite knee in a pedaling motion.</p></div>
+    <div class="exercise-item"><h3>Hollow Body Hold <span class="ex-level">Advanced</span></h3><p>Lying on your back, lift shoulders and legs off the ground into a curved "hollow" shape, and hold.</p></div>
+  </div>
+
+  <div class="exercise-group" id="fullbody">
+    <div class="exercise-item"><h3>Burpees <span class="ex-level">Intermediate</span></h3><p>Drop into a squat, kick back into a plank, do a push-up, jump feet back in, then jump up. Full-body conditioning.</p></div>
+    <div class="exercise-item"><h3>Mountain Climbers <span class="ex-level">Beginner</span></h3><p>In a plank position, drive knees toward your chest alternately at a quick pace.</p></div>
+    <div class="exercise-item"><h3>Jumping Jacks <span class="ex-level">Beginner</span></h3><p>Jump feet out while raising arms overhead, then jump back to start. Great warm-up or cardio finisher.</p></div>
+    <div class="exercise-item"><h3>Bear Crawl <span class="ex-level">Advanced</span></h3><p>On hands and feet, knees hovering just above the ground, crawl forward and backward with control.</p></div>
+  </div>
+
+</main>
+
+<script>
+document.querySelectorAll('.muscle-tab').forEach(tab => {
+  tab.addEventListener('click', () => {
+    document.querySelectorAll('.muscle-tab').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.exercise-group').forEach(g => g.classList.remove('active'));
+    tab.classList.add('active');
+    document.getElementById(tab.dataset.group).classList.add('active');
+  });
+});
+
+document.querySelectorAll('.exercise-item').forEach(item => {
+  item.addEventListener('click', () => {
+    item.classList.toggle('open');
+  });
+});
+
+// If URL has a hash like exercises.html#back, switch to that tab on load
+if (window.location.hash) {
+  const groupId = window.location.hash.substring(1);
+  const tab = document.querySelector(`.muscle-tab[data-group="${groupId}"]`);
+  if (tab) tab.click();
+}
+</script>
+
+<!-- ===== FOOTER ===== -->
+<footer class="footer">
+  <div class="footer-top">
+    <div class="footer-brand">
+      <span class="logo-dot"></span> Trainly
+    </div>
+    <div class="footer-links">
+      <a href="plans.html">Plans</a>
+      <a href="calculators.html">Tools</a>
+      <a href="exercises.html">Exercises</a>
+      <a href="tracker.html">Tracker</a>
+    </div>
+  </div>
+  <p class="footer-bottom">© 2026 Trainly. Train anywhere.</p>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>
