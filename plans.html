@@ -256,6 +256,12 @@ document.querySelectorAll('.plan-level-tabs').forEach(tabGroup => {
     });
   });
 });
+
+// Smooth-scroll to the right goal section if arriving via a link like plans.html#fatloss
+if (window.location.hash) {
+  const el = document.querySelector(window.location.hash);
+  if (el) setTimeout(() => el.scrollIntoView({behavior: 'smooth'}), 100);
+}
 </script>
 
 <!-- ===== FOOTER ===== -->
