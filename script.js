@@ -55,3 +55,11 @@ navPill.addEventListener('click', () => {
     navWrapper.classList.add('active');
   }
 });
+
+// "Coming soon" features — shows a friendly alert instead of a dead link
+document.querySelectorAll('.soon-link').forEach(link => {
+  link.addEventListener('click', (e) => {
+    e.preventDefault();
+    alert('This feature is coming soon!');
+  });
+});
