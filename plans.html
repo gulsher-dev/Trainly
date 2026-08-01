@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Workout Plans — Trainly</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- ===== NAVBAR (Dynamic Island style) ===== -->
+<header class="nav-wrapper" id="navWrapper">
+  <div class="nav-pill" id="navPill">
+
+    <a href="index.html" class="nav-logo">
+      <span class="logo-dot"></span> Trainly
+    </a>
+
+    <nav class="nav-links">
+      <div class="nav-item" data-menu="plans">
+        <span>PLANS</span>
+        <svg class="chevron" width="10" height="6" viewBox="0 0 10 6"><path d="M1 1L5 5L9 1" stroke="currentColor" stroke-width="1.5" fill="none"/></svg>
+      </div>
+      <div class="nav-item" data-menu="tools">
+        <span>TOOLS</span>
+        <svg class="chevron" width="10" height="6" viewBox="0 0 10 6"><path d="M1 1L5 5L9 1" stroke="currentColor" stroke-width="1.5" fill="none"/></svg>
+      </div>
+      <div class="nav-item" data-menu="library">
+        <span>EXERCISES</span>
+        <svg class="chevron" width="10" height="6" viewBox="0 0 10 6"><path d="M1 1L5 5L9 1" stroke="currentColor" stroke-width="1.5" fill="none"/></svg>
+      </div>
+      <a href="tracker.html" class="nav-item">
+        <span>TRACKER</span>
+      </a>
+    </nav>
+
+    <a href="plans.html" class="nav-cta">START FREE →</a>
+
+    <div class="nav-collapsed-label">
+      <span class="pulse-dot"></span> MENU
+    </div>
+
+  </div>
+
+  <div class="mega-menu" id="megaMenu">
+
+    <div class="mega-panel" data-panel="plans">
+      <div class="mega-head">
+        <span class="mega-eyebrow">PLANS</span>
+        <h2>Train anywhere, zero equipment needed</h2>
+        <p>Structured home workout plans built around your goal and your schedule.</p>
+      </div>
+      <div class="mega-cols">
+        <div class="mega-col">
+          <h4>BY GOAL</h4>
+          <a href="plans.html#fatloss">🔥 Fat Loss</a>
+          <a href="plans.html#musclebuilding">💪 Muscle Building</a>
+          <a href="plans.html#generalfitness">⚡ General Fitness</a>
+          <a href="plans.html#flexibility">🧘 Flexibility & Mobility</a>
+        </div>
+        <div class="mega-col">
+          <h4>BY LEVEL</h4>
+          <a href="plans.html">🌱 Beginner</a>
+          <a href="plans.html">📈 Intermediate</a>
+          <a href="plans.html">🏆 Advanced</a>
+        </div>
+        <div class="mega-col highlight-card">
+          <span class="hc-tag">FEATURED PLAN</span>
+          <div class="hc-number">30</div>
+          <span class="hc-label">DAY FAT LOSS CHALLENGE</span>
+          <a href="plans.html#fatloss" class="hc-link">See Plan →</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="mega-panel" data-panel="tools">
+      <div class="mega-head">
+        <span class="mega-eyebrow">TOOLS</span>
+        <h2>Know your numbers</h2>
+        <p>Free calculators to plan your training and nutrition properly.</p>
+      </div>
+      <div class="mega-cols">
+        <div class="mega-col">
+          <h4>CALCULATORS</h4>
+          <a href="calculators.html#protein">🥩 Protein Calculator</a>
+          <a href="calculators.html#tdee">🔥 Calorie / TDEE Calculator</a>
+          <a href="calculators.html#bmi">⚖️ BMI Calculator</a>
+          <a href="calculators.html#onerep">🏋️ One-Rep Max Calculator</a>
+        </div>
+        <div class="mega-col">
+          <h4>AI POWERED</h4>
+          <a href="#" class="soon-link">🤖 AI Plan Generator <span class="soon-tag">Soon</span></a>
+          <a href="#" class="soon-link">📋 AI Diet Suggestions <span class="soon-tag">Soon</span></a>
+        </div>
+      </div>
+    </div>
+
+    <div class="mega-panel" data-panel="library">
+      <div class="mega-head">
+        <span class="mega-eyebrow">EXERCISES</span>
+        <h2>Every move, explained</h2>
+        <p>Searchable library of home exercises by muscle group.</p>
+      </div>
+      <div class="mega-cols">
+        <div class="mega-col">
+          <h4>MUSCLE GROUPS</h4>
+          <a href="exercises.html#chest">Chest</a>
+          <a href="exercises.html#back">Back</a>
+          <a href="exercises.html#legs">Legs</a>
+          <a href="exercises.html#arms">Arms</a>
+          <a href="exercises.html#core">Core</a>
+          <a href="exercises.html#fullbody">Full Body</a>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</header>
+
+<!-- ===== WORKOUT PLANS PAGE CONTENT ===== -->
+<main class="page-content">
+  <div class="page-hero">
+    <span class="section-eyebrow">PLANS</span>
+    <h1>Train anywhere, zero equipment needed</h1>
+    <p>Pick your goal, pick your level, and get started right now.</p>
+  </div>
+
+  <!-- FAT LOSS -->
+  <div class="plan-goal-section" id="fatloss">
+    <h2>🔥 Fat Loss</h2>
+    <p>Higher-rep, higher-intensity circuits to burn calories and build conditioning.</p>
+    <div class="plan-level-tabs" data-goal="fatloss">
+      <div class="plan-level-tab active" data-level="beginner">Beginner</div>
+      <div class="plan-level-tab" data-level="intermediate">Intermediate</div>
+      <div class="plan-level-tab" data-level="advanced">Advanced</div>
+    </div>
+    <div class="plan-list active" data-goal="fatloss" data-level="beginner">
+      <div class="plan-exercise-row"><span>Jumping Jacks</span><span>3 x 30s</span></div>
+      <div class="plan-exercise-row"><span>Bodyweight Squats</span><span>3 x 12</span></div>
+      <div class="plan-exercise-row"><span>Push-Ups (or Incline)</span><span>3 x 8</span></div>
+      <div class="plan-exercise-row"><span>Mountain Climbers</span><span>3 x 20s</span></div>
+      <div class="plan-exercise-row"><span>Plank</span><span>3 x 20s</span></div>
+    </div>
+    <div class="plan-list" data-goal="fatloss" data-level="intermediate">
+      <div class="plan-exercise-row"><span>Burpees</span><span>4 x 10</span></div>
+      <div class="plan-exercise-row"><span>Jump Squats</span><span>4 x 12</span></div>
+      <div class="plan-exercise-row"><span>Mountain Climbers</span><span>4 x 30s</span></div>
+      <div class="plan-exercise-row"><span>Bicycle Crunches</span><span>4 x 20</span></div>
+      <div class="plan-exercise-row"><span>Plank</span><span>4 x 40s</span></div>
+    </div>
+    <div class="plan-list" data-goal="fatloss" data-level="advanced">
+      <div class="plan-exercise-row"><span>Burpees</span><span>5 x 15</span></div>
+      <div class="plan-exercise-row"><span>Jump Squats</span><span>5 x 15</span></div>
+      <div class="plan-exercise-row"><span>Bear Crawl</span><span>5 x 30s</span></div>
+      <div class="plan-exercise-row"><span>Diamond Push-Ups</span><span>5 x 12</span></div>
+      <div class="plan-exercise-row"><span>Hollow Body Hold</span><span>5 x 30s</span></div>
+    </div>
+  </div>
+
+  <!-- MUSCLE BUILDING -->
+  <div class="plan-goal-section" id="musclebuilding">
+    <h2>💪 Muscle Building</h2>
+    <p>Lower-rep, controlled movements focused on building strength and size.</p>
+    <div class="plan-level-tabs" data-goal="muscle">
+      <div class="plan-level-tab active" data-level="beginner">Beginner</div>
+      <div class="plan-level-tab" data-level="intermediate">Intermediate</div>
+      <div class="plan-level-tab" data-level="advanced">Advanced</div>
+    </div>
+    <div class="plan-list active" data-goal="muscle" data-level="beginner">
+      <div class="plan-exercise-row"><span>Incline Push-Ups</span><span>3 x 10</span></div>
+      <div class="plan-exercise-row"><span>Bodyweight Squats</span><span>3 x 12</span></div>
+      <div class="plan-exercise-row"><span>Superman Hold</span><span>3 x 15s</span></div>
+      <div class="plan-exercise-row"><span>Chair Dips</span><span>3 x 10</span></div>
+    </div>
+    <div class="plan-list" data-goal="muscle" data-level="intermediate">
+      <div class="plan-exercise-row"><span>Push-Ups</span><span>4 x 12</span></div>
+      <div class="plan-exercise-row"><span>Bulgarian Split Squats</span><span>4 x 10/leg</span></div>
+      <div class="plan-exercise-row"><span>Towel Rows</span><span>4 x 12</span></div>
+      <div class="plan-exercise-row"><span>Pike Push-Ups</span><span>4 x 10</span></div>
+    </div>
+    <div class="plan-list" data-goal="muscle" data-level="advanced">
+      <div class="plan-exercise-row"><span>Diamond Push-Ups</span><span>5 x 12</span></div>
+      <div class="plan-exercise-row"><span>Bulgarian Split Squats</span><span>5 x 12/leg</span></div>
+      <div class="plan-exercise-row"><span>Pull-Ups (doorframe bar)</span><span>5 x 6</span></div>
+      <div class="plan-exercise-row"><span>Decline Push-Ups</span><span>5 x 12</span></div>
+    </div>
+  </div>
+
+  <!-- GENERAL FITNESS -->
+  <div class="plan-goal-section" id="generalfitness">
+    <h2>⚡ General Fitness</h2>
+    <p>A balanced mix of strength and cardio to keep you healthy and active.</p>
+    <div class="plan-level-tabs" data-goal="general">
+      <div class="plan-level-tab active" data-level="beginner">Beginner</div>
+      <div class="plan-level-tab" data-level="intermediate">Intermediate</div>
+      <div class="plan-level-tab" data-level="advanced">Advanced</div>
+    </div>
+    <div class="plan-list active" data-goal="general" data-level="beginner">
+      <div class="plan-exercise-row"><span>Jumping Jacks</span><span>2 x 30s</span></div>
+      <div class="plan-exercise-row"><span>Bodyweight Squats</span><span>2 x 10</span></div>
+      <div class="plan-exercise-row"><span>Push-Ups (or Incline)</span><span>2 x 8</span></div>
+      <div class="plan-exercise-row"><span>Plank</span><span>2 x 20s</span></div>
+    </div>
+    <div class="plan-list" data-goal="general" data-level="intermediate">
+      <div class="plan-exercise-row"><span>Lunges</span><span>3 x 12/leg</span></div>
+      <div class="plan-exercise-row"><span>Push-Ups</span><span>3 x 12</span></div>
+      <div class="plan-exercise-row"><span>Mountain Climbers</span><span>3 x 30s</span></div>
+      <div class="plan-exercise-row"><span>Dead Bug</span><span>3 x 12/side</span></div>
+    </div>
+    <div class="plan-list" data-goal="general" data-level="advanced">
+      <div class="plan-exercise-row"><span>Burpees</span><span>4 x 12</span></div>
+      <div class="plan-exercise-row"><span>Pike Push-Ups</span><span>4 x 10</span></div>
+      <div class="plan-exercise-row"><span>Bear Crawl</span><span>4 x 30s</span></div>
+      <div class="plan-exercise-row"><span>Hollow Body Hold</span><span>4 x 25s</span></div>
+    </div>
+  </div>
+
+  <!-- FLEXIBILITY -->
+  <div class="plan-goal-section" id="flexibility">
+    <h2>🧘 Flexibility & Mobility</h2>
+    <p>Slow, controlled movements to improve range of motion and recovery.</p>
+    <div class="plan-level-tabs" data-goal="flex">
+      <div class="plan-level-tab active" data-level="beginner">Beginner</div>
+      <div class="plan-level-tab" data-level="intermediate">Intermediate</div>
+      <div class="plan-level-tab" data-level="advanced">Advanced</div>
+    </div>
+    <div class="plan-list active" data-goal="flex" data-level="beginner">
+      <div class="plan-exercise-row"><span>Cat-Cow Stretch</span><span>2 x 10</span></div>
+      <div class="plan-exercise-row"><span>Standing Hamstring Stretch</span><span>2 x 20s/leg</span></div>
+      <div class="plan-exercise-row"><span>Shoulder Rolls</span><span>2 x 10</span></div>
+    </div>
+    <div class="plan-list" data-goal="flex" data-level="intermediate">
+      <div class="plan-exercise-row"><span>World's Greatest Stretch</span><span>2 x 5/side</span></div>
+      <div class="plan-exercise-row"><span>Deep Squat Hold</span><span>2 x 30s</span></div>
+      <div class="plan-exercise-row"><span>Hip Flexor Stretch</span><span>2 x 20s/side</span></div>
+    </div>
+    <div class="plan-list" data-goal="flex" data-level="advanced">
+      <div class="plan-exercise-row"><span>Full Body Flow (yoga-style)</span><span>10 min</span></div>
+      <div class="plan-exercise-row"><span>Pancake Stretch</span><span>3 x 30s</span></div>
+      <div class="plan-exercise-row"><span>Bridge Hold</span><span>3 x 20s</span></div>
+    </div>
+  </div>
+
+</main>
+
+<script>
+document.querySelectorAll('.plan-level-tabs').forEach(tabGroup => {
+  const goal = tabGroup.dataset.goal;
+  tabGroup.querySelectorAll('.plan-level-tab').forEach(tab => {
+    tab.addEventListener('click', () => {
+      tabGroup.querySelectorAll('.plan-level-tab').forEach(t => t.classList.remove('active'));
+      tab.classList.add('active');
+      document.querySelectorAll(`.plan-list[data-goal="${goal}"]`).forEach(list => {
+        list.classList.toggle('active', list.dataset.level === tab.dataset.level);
+      });
+    });
+  });
+});
+</script>
+
+<!-- ===== FOOTER ===== -->
+<footer class="footer">
+  <div class="footer-top">
+    <div class="footer-brand">
+      <span class="logo-dot"></span> Trainly
+    </div>
+    <div class="footer-links">
+      <a href="plans.html">Plans</a>
+      <a href="calculators.html">Tools</a>
+      <a href="exercises.html">Exercises</a>
+      <a href="tracker.html">Tracker</a>
+    </div>
+  </div>
+  <p class="footer-bottom">© 2026 Trainly. Train anywhere.</p>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>
