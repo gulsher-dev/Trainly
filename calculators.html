@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Calculators — Trainly</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- ===== NAVBAR (Dynamic Island style) ===== -->
+<header class="nav-wrapper" id="navWrapper">
+  <div class="nav-pill" id="navPill">
+
+    <a href="index.html" class="nav-logo">
+      <span class="logo-dot"></span> Trainly
+    </a>
+
+    <nav class="nav-links">
+      <div class="nav-item" data-menu="plans">
+        <span>PLANS</span>
+        <svg class="chevron" width="10" height="6" viewBox="0 0 10 6"><path d="M1 1L5 5L9 1" stroke="currentColor" stroke-width="1.5" fill="none"/></svg>
+      </div>
+      <div class="nav-item" data-menu="tools">
+        <span>TOOLS</span>
+        <svg class="chevron" width="10" height="6" viewBox="0 0 10 6"><path d="M1 1L5 5L9 1" stroke="currentColor" stroke-width="1.5" fill="none"/></svg>
+      </div>
+      <div class="nav-item" data-menu="library">
+        <span>EXERCISES</span>
+        <svg class="chevron" width="10" height="6" viewBox="0 0 10 6"><path d="M1 1L5 5L9 1" stroke="currentColor" stroke-width="1.5" fill="none"/></svg>
+      </div>
+      <a href="tracker.html" class="nav-item">
+        <span>TRACKER</span>
+      </a>
+    </nav>
+
+    <a href="plans.html" class="nav-cta">START FREE →</a>
+
+    <div class="nav-collapsed-label">
+      <span class="pulse-dot"></span> MENU
+    </div>
+
+  </div>
+
+  <div class="mega-menu" id="megaMenu">
+
+    <div class="mega-panel" data-panel="plans">
+      <div class="mega-head">
+        <span class="mega-eyebrow">PLANS</span>
+        <h2>Train anywhere, zero equipment needed</h2>
+        <p>Structured home workout plans built around your goal and your schedule.</p>
+      </div>
+      <div class="mega-cols">
+        <div class="mega-col">
+          <h4>BY GOAL</h4>
+          <a href="plans.html#fatloss">🔥 Fat Loss</a>
+          <a href="plans.html#musclebuilding">💪 Muscle Building</a>
+          <a href="plans.html#generalfitness">⚡ General Fitness</a>
+          <a href="plans.html#flexibility">🧘 Flexibility & Mobility</a>
+        </div>
+        <div class="mega-col">
+          <h4>BY LEVEL</h4>
+          <a href="plans.html">🌱 Beginner</a>
+          <a href="plans.html">📈 Intermediate</a>
+          <a href="plans.html">🏆 Advanced</a>
+        </div>
+        <div class="mega-col highlight-card">
+          <span class="hc-tag">FEATURED PLAN</span>
+          <div class="hc-number">30</div>
+          <span class="hc-label">DAY FAT LOSS CHALLENGE</span>
+          <a href="plans.html#fatloss" class="hc-link">See Plan →</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="mega-panel" data-panel="tools">
+      <div class="mega-head">
+        <span class="mega-eyebrow">TOOLS</span>
+        <h2>Know your numbers</h2>
+        <p>Free calculators to plan your training and nutrition properly.</p>
+      </div>
+      <div class="mega-cols">
+        <div class="mega-col">
+          <h4>CALCULATORS</h4>
+          <a href="calculators.html#protein">🥩 Protein Calculator</a>
+          <a href="calculators.html#tdee">🔥 Calorie / TDEE Calculator</a>
+          <a href="calculators.html#bmi">⚖️ BMI Calculator</a>
+          <a href="calculators.html#onerep">🏋️ One-Rep Max Calculator</a>
+        </div>
+        <div class="mega-col">
+          <h4>AI POWERED</h4>
+          <a href="#" class="soon-link">🤖 AI Plan Generator <span class="soon-tag">Soon</span></a>
+          <a href="#" class="soon-link">📋 AI Diet Suggestions <span class="soon-tag">Soon</span></a>
+        </div>
+      </div>
+    </div>
+
+    <div class="mega-panel" data-panel="library">
+      <div class="mega-head">
+        <span class="mega-eyebrow">EXERCISES</span>
+        <h2>Every move, explained</h2>
+        <p>Searchable library of home exercises by muscle group.</p>
+      </div>
+      <div class="mega-cols">
+        <div class="mega-col">
+          <h4>MUSCLE GROUPS</h4>
+          <a href="exercises.html#chest">Chest</a>
+          <a href="exercises.html#back">Back</a>
+          <a href="exercises.html#legs">Legs</a>
+          <a href="exercises.html#arms">Arms</a>
+          <a href="exercises.html#core">Core</a>
+          <a href="exercises.html#fullbody">Full Body</a>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</header>
+
+<!-- ===== CALCULATORS PAGE CONTENT ===== -->
+<main class="page-content">
+  <div class="page-hero">
+    <span class="section-eyebrow">TOOLS</span>
+    <h1>Know your numbers</h1>
+    <p>Free calculators to plan your training and nutrition properly.</p>
+  </div>
+
+  <!-- PROTEIN CALCULATOR -->
+  <section class="calc-card" id="protein">
+    <h2>🥩 Protein Calculator</h2>
+    <p class="calc-desc">Estimate your daily protein target based on your weight and activity level.</p>
+    <div class="calc-form">
+      <label>Weight (kg)
+        <input type="number" id="proteinWeight" placeholder="e.g. 70">
+      </label>
+      <label>Activity Level
+        <select id="proteinActivity">
+          <option value="1.2">Sedentary</option>
+          <option value="1.6">Moderately Active</option>
+          <option value="2.2">Very Active / Building Muscle</option>
+        </select>
+      </label>
+      <button onclick="calcProtein()">Calculate</button>
+    </div>
+    <div class="calc-result" id="proteinResult"></div>
+  </section>
+
+  <!-- TDEE / CALORIE CALCULATOR -->
+  <section class="calc-card" id="tdee">
+    <h2>🔥 Calorie / TDEE Calculator</h2>
+    <p class="calc-desc">Find your maintenance calories, then adjust for fat loss or muscle gain.</p>
+    <div class="calc-form">
+      <label>Sex
+        <select id="tdeeSex">
+          <option value="male">Male</option>
+          <option value="female">Female</option>
+        </select>
+      </label>
+      <label>Age
+        <input type="number" id="tdeeAge" placeholder="e.g. 25">
+      </label>
+      <label>Weight (kg)
+        <input type="number" id="tdeeWeight" placeholder="e.g. 70">
+      </label>
+      <label>Height (cm)
+        <input type="number" id="tdeeHeight" placeholder="e.g. 175">
+      </label>
+      <label>Activity Level
+        <select id="tdeeActivity">
+          <option value="1.2">Sedentary (little/no exercise)</option>
+          <option value="1.375">Light Exercise (1-3 days/week)</option>
+          <option value="1.55">Moderate Exercise (3-5 days/week)</option>
+          <option value="1.725">Heavy Exercise (6-7 days/week)</option>
+          <option value="1.9">Athlete (2x/day)</option>
+        </select>
+      </label>
+      <button onclick="calcTDEE()">Calculate</button>
+    </div>
+    <div class="calc-result" id="tdeeResult"></div>
+  </section>
+
+  <!-- BMI CALCULATOR -->
+  <section class="calc-card" id="bmi">
+    <h2>⚖️ BMI Calculator</h2>
+    <p class="calc-desc">Body Mass Index — a quick general health screening number.</p>
+    <div class="calc-form">
+      <label>Weight (kg)
+        <input type="number" id="bmiWeight" placeholder="e.g. 70">
+      </label>
+      <label>Height (cm)
+        <input type="number" id="bmiHeight" placeholder="e.g. 175">
+      </label>
+      <button onclick="calcBMI()">Calculate</button>
+    </div>
+    <div class="calc-result" id="bmiResult"></div>
+  </section>
+
+  <!-- ONE REP MAX CALCULATOR -->
+  <section class="calc-card" id="onerep">
+    <h2>🏋️ One-Rep Max Calculator</h2>
+    <p class="calc-desc">Estimate the heaviest weight you could lift for a single rep.</p>
+    <div class="calc-form">
+      <label>Weight Lifted (kg)
+        <input type="number" id="ormWeight" placeholder="e.g. 60">
+      </label>
+      <label>Reps Completed
+        <input type="number" id="ormReps" placeholder="e.g. 8">
+      </label>
+      <button onclick="calcORM()">Calculate</button>
+    </div>
+    <div class="calc-result" id="ormResult"></div>
+  </section>
+
+</main>
+
+<script>
+function calcProtein() {
+  const w = parseFloat(document.getElementById('proteinWeight').value);
+  const factor = parseFloat(document.getElementById('proteinActivity').value);
+  const out = document.getElementById('proteinResult');
+  if (!w || w <= 0) { out.innerHTML = '⚠️ Enter a valid weight.'; return; }
+  const grams = (w * factor).toFixed(0);
+  out.innerHTML = `<strong>${grams}g</strong> of protein per day is a good target for you.`;
+}
+
+function calcTDEE() {
+  const sex = document.getElementById('tdeeSex').value;
+  const age = parseFloat(document.getElementById('tdeeAge').value);
+  const w = parseFloat(document.getElementById('tdeeWeight').value);
+  const h = parseFloat(document.getElementById('tdeeHeight').value);
+  const activity = parseFloat(document.getElementById('tdeeActivity').value);
+  const out = document.getElementById('tdeeResult');
+  if (!age || !w || !h) { out.innerHTML = '⚠️ Fill in all fields with valid numbers.'; return; }
+  let bmr = sex === 'male'
+    ? (10 * w) + (6.25 * h) - (5 * age) + 5
+    : (10 * w) + (6.25 * h) - (5 * age) - 161;
+  const tdee = bmr * activity;
+  out.innerHTML = `
+    Maintenance: <strong>${tdee.toFixed(0)} kcal/day</strong><br>
+    Fat Loss: <strong>${(tdee - 500).toFixed(0)} kcal/day</strong><br>
+    Muscle Gain: <strong>${(tdee + 300).toFixed(0)} kcal/day</strong>
+  `;
+}
+
+function calcBMI() {
+  const w = parseFloat(document.getElementById('bmiWeight').value);
+  const h = parseFloat(document.getElementById('bmiHeight').value) / 100;
+  const out = document.getElementById('bmiResult');
+  if (!w || !h) { out.innerHTML = '⚠️ Enter valid weight and height.'; return; }
+  const bmi = (w / (h * h)).toFixed(1);
+  let category = '';
+  if (bmi < 18.5) category = 'Underweight';
+  else if (bmi < 25) category = 'Normal weight';
+  else if (bmi < 30) category = 'Overweight';
+  else category = 'Obese';
+  out.innerHTML = `Your BMI is <strong>${bmi}</strong> — ${category}`;
+}
+
+function calcORM() {
+  const w = parseFloat(document.getElementById('ormWeight').value);
+  const r = parseFloat(document.getElementById('ormReps').value);
+  const out = document.getElementById('ormResult');
+  if (!w || !r) { out.innerHTML = '⚠️ Enter valid weight and reps.'; return; }
+  const orm = (w * (1 + r / 30)).toFixed(1);
+  out.innerHTML = `Estimated One-Rep Max: <strong>${orm} kg</strong>`;
+}
+
+// Auto-scroll to a calculator if the URL has a hash (e.g. calculators.html#bmi)
+if (window.location.hash) {
+  const el = document.querySelector(window.location.hash);
+  if (el) setTimeout(() => el.scrollIntoView({behavior: 'smooth'}), 100);
+}
+</script>
+
+<!-- ===== FOOTER ===== -->
+<footer class="footer">
+  <div class="footer-top">
+    <div class="footer-brand">
+      <span class="logo-dot"></span> Trainly
+    </div>
+    <div class="footer-links">
+      <a href="plans.html">Plans</a>
+      <a href="calculators.html">Tools</a>
+      <a href="exercises.html">Exercises</a>
+      <a href="tracker.html">Tracker</a>
+    </div>
+  </div>
+  <p class="footer-bottom">© 2026 Trainly. Train anywhere.</p>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>
