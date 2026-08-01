@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Progress Tracker — Trainly</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- ===== NAVBAR (Dynamic Island style) ===== -->
+<header class="nav-wrapper" id="navWrapper">
+  <div class="nav-pill" id="navPill">
+
+    <a href="index.html" class="nav-logo">
+      <span class="logo-dot"></span> Trainly
+    </a>
+
+    <nav class="nav-links">
+      <div class="nav-item" data-menu="plans">
+        <span>PLANS</span>
+        <svg class="chevron" width="10" height="6" viewBox="0 0 10 6"><path d="M1 1L5 5L9 1" stroke="currentColor" stroke-width="1.5" fill="none"/></svg>
+      </div>
+      <div class="nav-item" data-menu="tools">
+        <span>TOOLS</span>
+        <svg class="chevron" width="10" height="6" viewBox="0 0 10 6"><path d="M1 1L5 5L9 1" stroke="currentColor" stroke-width="1.5" fill="none"/></svg>
+      </div>
+      <div class="nav-item" data-menu="library">
+        <span>EXERCISES</span>
+        <svg class="chevron" width="10" height="6" viewBox="0 0 10 6"><path d="M1 1L5 5L9 1" stroke="currentColor" stroke-width="1.5" fill="none"/></svg>
+      </div>
+      <a href="tracker.html" class="nav-item">
+        <span>TRACKER</span>
+      </a>
+    </nav>
+
+    <a href="plans.html" class="nav-cta">START FREE →</a>
+
+    <div class="nav-collapsed-label">
+      <span class="pulse-dot"></span> MENU
+    </div>
+
+  </div>
+
+  <div class="mega-menu" id="megaMenu">
+
+    <div class="mega-panel" data-panel="plans">
+      <div class="mega-head">
+        <span class="mega-eyebrow">PLANS</span>
+        <h2>Train anywhere, zero equipment needed</h2>
+        <p>Structured home workout plans built around your goal and your schedule.</p>
+      </div>
+      <div class="mega-cols">
+        <div class="mega-col">
+          <h4>BY GOAL</h4>
+          <a href="plans.html#fatloss">🔥 Fat Loss</a>
+          <a href="plans.html#musclebuilding">💪 Muscle Building</a>
+          <a href="plans.html#generalfitness">⚡ General Fitness</a>
+          <a href="plans.html#flexibility">🧘 Flexibility & Mobility</a>
+        </div>
+        <div class="mega-col">
+          <h4>BY LEVEL</h4>
+          <a href="plans.html">🌱 Beginner</a>
+          <a href="plans.html">📈 Intermediate</a>
+          <a href="plans.html">🏆 Advanced</a>
+        </div>
+        <div class="mega-col highlight-card">
+          <span class="hc-tag">FEATURED PLAN</span>
+          <div class="hc-number">30</div>
+          <span class="hc-label">DAY FAT LOSS CHALLENGE</span>
+          <a href="plans.html#fatloss" class="hc-link">See Plan →</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="mega-panel" data-panel="tools">
+      <div class="mega-head">
+        <span class="mega-eyebrow">TOOLS</span>
+        <h2>Know your numbers</h2>
+        <p>Free calculators to plan your training and nutrition properly.</p>
+      </div>
+      <div class="mega-cols">
+        <div class="mega-col">
+          <h4>CALCULATORS</h4>
+          <a href="calculators.html#protein">🥩 Protein Calculator</a>
+          <a href="calculators.html#tdee">🔥 Calorie / TDEE Calculator</a>
+          <a href="calculators.html#bmi">⚖️ BMI Calculator</a>
+          <a href="calculators.html#onerep">🏋️ One-Rep Max Calculator</a>
+        </div>
+        <div class="mega-col">
+          <h4>AI POWERED</h4>
+          <a href="#" class="soon-link">🤖 AI Plan Generator <span class="soon-tag">Soon</span></a>
+          <a href="#" class="soon-link">📋 AI Diet Suggestions <span class="soon-tag">Soon</span></a>
+        </div>
+      </div>
+    </div>
+
+    <div class="mega-panel" data-panel="library">
+      <div class="mega-head">
+        <span class="mega-eyebrow">EXERCISES</span>
+        <h2>Every move, explained</h2>
+        <p>Searchable library of home exercises by muscle group.</p>
+      </div>
+      <div class="mega-cols">
+        <div class="mega-col">
+          <h4>MUSCLE GROUPS</h4>
+          <a href="exercises.html#chest">Chest</a>
+          <a href="exercises.html#back">Back</a>
+          <a href="exercises.html#legs">Legs</a>
+          <a href="exercises.html#arms">Arms</a>
+          <a href="exercises.html#core">Core</a>
+          <a href="exercises.html#fullbody">Full Body</a>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</header>
+
+<!-- ===== TRACKER PAGE CONTENT ===== -->
+<main class="page-content">
+  <div class="page-hero">
+    <span class="section-eyebrow">TRACKER</span>
+    <h1>Track your progress</h1>
+    <p>Log your weight and workouts — saved right in your browser.</p>
+  </div>
+
+  <div class="tracker-grid">
+    <div class="tracker-stat-card">
+      <div class="num" id="streakNum">0</div>
+      <div class="label">DAY STREAK</div>
+    </div>
+    <div class="tracker-stat-card">
+      <div class="num" id="totalWorkouts">0</div>
+      <div class="label">WORKOUTS LOGGED</div>
+    </div>
+    <div class="tracker-stat-card">
+      <div class="num" id="currentWeight">—</div>
+      <div class="label">LATEST WEIGHT (KG)</div>
+    </div>
+  </div>
+
+  <div class="tracker-card">
+    <h2>✅ Today's Workout</h2>
+    <button class="streak-btn" id="workoutBtn" onclick="markWorkoutDone()">Mark Today's Workout Complete</button>
+  </div>
+
+  <div class="tracker-card">
+    <h2>⚖️ Weight Log</h2>
+    <div class="tracker-form">
+      <input type="number" id="weightInput" placeholder="Weight (kg)">
+      <button onclick="addWeight()">Log Weight</button>
+    </div>
+    <div class="weight-log-list" id="weightLogList"></div>
+  </div>
+</main>
+
+<script>
+const today = new Date().toISOString().split('T')[0];
+
+function loadTracker() {
+  return JSON.parse(localStorage.getItem('trainlyTracker') || '{"workoutDates":[],"weightLog":[]}');
+}
+
+function saveTracker(data) {
+  localStorage.setItem('trainlyTracker', JSON.stringify(data));
+}
+
+function calcStreak(dates) {
+  if (dates.length === 0) return 0;
+  const sorted = [...dates].sort().reverse();
+  let streak = 0;
+  let cursor = new Date();
+  for (let i = 0; i < sorted.length; i++) {
+    const expected = cursor.toISOString().split('T')[0];
+    if (sorted[i] === expected) {
+      streak++;
+      cursor.setDate(cursor.getDate() - 1);
+    } else {
+      break;
+    }
+  }
+  return streak;
+}
+
+function render() {
+  const data = loadTracker();
+
+  document.getElementById('streakNum').textContent = calcStreak(data.workoutDates);
+  document.getElementById('totalWorkouts').textContent = data.workoutDates.length;
+
+  const latest = data.weightLog[data.weightLog.length - 1];
+  document.getElementById('currentWeight').textContent = latest ? latest.weight : '—';
+
+  const btn = document.getElementById('workoutBtn');
+  if (data.workoutDates.includes(today)) {
+    btn.textContent = "✅ Today's Workout Logged";
+    btn.disabled = true;
+  } else {
+    btn.textContent = "Mark Today's Workout Complete";
+    btn.disabled = false;
+  }
+
+  const listEl = document.getElementById('weightLogList');
+  if (data.weightLog.length === 0) {
+    listEl.innerHTML = '<div class="empty-state">No entries yet — log your first weight above.</div>';
+  } else {
+    listEl.innerHTML = [...data.weightLog].reverse().map(entry =>
+      `<div class="weight-log-row"><span>${entry.date}</span><span>${entry.weight} kg</span></div>`
+    ).join('');
+  }
+}
+
+function markWorkoutDone() {
+  const data = loadTracker();
+  if (!data.workoutDates.includes(today)) {
+    data.workoutDates.push(today);
+    saveTracker(data);
+    render();
+  }
+}
+
+function addWeight() {
+  const input = document.getElementById('weightInput');
+  const val = parseFloat(input.value);
+  if (!val || val <= 0) { alert('Enter a valid weight.'); return; }
+  const data = loadTracker();
+  data.weightLog.push({ date: today, weight: val });
+  saveTracker(data);
+  input.value = '';
+  render();
+}
+
+render();
+</script>
+
+<!-- ===== FOOTER ===== -->
+<footer class="footer">
+  <div class="footer-top">
+    <div class="footer-brand">
+      <span class="logo-dot"></span> Trainly
+    </div>
+    <div class="footer-links">
+      <a href="plans.html">Plans</a>
+      <a href="calculators.html">Tools</a>
+      <a href="exercises.html">Exercises</a>
+      <a href="tracker.html">Tracker</a>
+    </div>
+  </div>
+  <p class="footer-bottom">© 2026 Trainly. Train anywhere.</p>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>
