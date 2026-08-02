@@ -32,8 +32,6 @@ a { text-decoration: none; color: inherit; }
   pointer-events: none;
 }
 
-/* FIX: when the menu is open, the whole wrapper becomes clickable
-   so the gap between the pill and the dropdown is no longer a dead zone */
 .nav-wrapper.active {
   pointer-events: auto;
 }
@@ -901,4 +899,138 @@ a { text-decoration: none; color: inherit; }
   color: var(--gray);
   font-size: 13.5px;
   padding: 20px 0;
+}
+
+/* ===== STICK FIGURE EXERCISE DEMOS ===== */
+.exercise-demo {
+  width: 90px;
+  height: 100px;
+  flex-shrink: 0;
+  background: #faf7f3;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.stick-figure {
+  width: 70px;
+  height: 80px;
+  overflow: visible;
+}
+
+.stick-figure line {
+  stroke: var(--orange);
+  stroke-width: 7;
+  stroke-linecap: round;
+}
+
+.stick-figure circle {
+  fill: var(--orange);
+}
+
+.exercise-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 18px;
+}
+
+.exercise-item-body { flex: 1; }
+
+/* --- SQUAT --- */
+.anim-squat .sf-torso-group { animation: squatTorso 1.6s ease-in-out infinite; }
+.anim-squat .sf-leg-left { animation: squatLegL 1.6s ease-in-out infinite; }
+.anim-squat .sf-leg-right { animation: squatLegR 1.6s ease-in-out infinite; }
+@keyframes squatTorso { 0%,100% { transform: translateY(0); } 50% { transform: translateY(14px); } }
+@keyframes squatLegL { 0%,100% { transform: rotate(0deg); } 50% { transform: rotate(-18deg); } }
+@keyframes squatLegR { 0%,100% { transform: rotate(0deg); } 50% { transform: rotate(18deg); } }
+
+/* --- PUSH-UP --- */
+.anim-pushup .sf-torso-group { animation: pushupTorso 1.4s ease-in-out infinite; }
+.anim-pushup .sf-arm-left { animation: pushupArmL 1.4s ease-in-out infinite; }
+.anim-pushup .sf-arm-right { animation: pushupArmR 1.4s ease-in-out infinite; }
+@keyframes pushupTorso { 0%,100% { transform: translateY(0); } 50% { transform: translateY(10px); } }
+@keyframes pushupArmL { 0%,100% { transform: rotate(0deg); } 50% { transform: rotate(20deg); } }
+@keyframes pushupArmR { 0%,100% { transform: rotate(0deg); } 50% { transform: rotate(-20deg); } }
+
+/* --- PLANK (subtle hold) --- */
+.anim-plank .sf-torso-group { animation: plankHold 2.4s ease-in-out infinite; }
+@keyframes plankHold { 0%,100% { transform: translateY(0); } 50% { transform: translateY(2px); } }
+
+/* --- JUMP (jumping jack style) --- */
+.anim-jump .sf-arm-left { animation: jumpArmL 1s ease-in-out infinite; }
+.anim-jump .sf-arm-right { animation: jumpArmR 1s ease-in-out infinite; }
+.anim-jump .sf-leg-left { animation: jumpLegL 1s ease-in-out infinite; }
+.anim-jump .sf-leg-right { animation: jumpLegR 1s ease-in-out infinite; }
+.anim-jump .sf-torso-group { animation: jumpTorso 1s ease-in-out infinite; }
+@keyframes jumpArmL { 0%,100% { transform: rotate(0deg); } 50% { transform: rotate(-100deg); } }
+@keyframes jumpArmR { 0%,100% { transform: rotate(0deg); } 50% { transform: rotate(100deg); } }
+@keyframes jumpLegL { 0%,100% { transform: rotate(0deg); } 50% { transform: rotate(-22deg); } }
+@keyframes jumpLegR { 0%,100% { transform: rotate(0deg); } 50% { transform: rotate(22deg); } }
+@keyframes jumpTorso { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-6px); } }
+
+/* --- LUNGE --- */
+.anim-lunge .sf-leg-left { animation: lungeLegL 1.6s ease-in-out infinite; }
+.anim-lunge .sf-leg-right { animation: lungeLegR 1.6s ease-in-out infinite; }
+.anim-lunge .sf-torso-group { animation: lungeTorso 1.6s ease-in-out infinite; }
+@keyframes lungeLegL { 0%,100% { transform: rotate(0deg); } 50% { transform: rotate(-30deg); } }
+@keyframes lungeLegR { 0%,100% { transform: rotate(0deg); } 50% { transform: rotate(15deg); } }
+@keyframes lungeTorso { 0%,100% { transform: translateY(0); } 50% { transform: translateY(8px); } }
+
+/* --- PULL (rows / curls) --- */
+.anim-pull .sf-arm-left { animation: pullArmL 1.3s ease-in-out infinite; }
+.anim-pull .sf-arm-right { animation: pullArmR 1.3s ease-in-out infinite; }
+@keyframes pullArmL { 0%,100% { transform: rotate(0deg); } 50% { transform: rotate(-45deg); } }
+@keyframes pullArmR { 0%,100% { transform: rotate(0deg); } 50% { transform: rotate(45deg); } }
+
+/* --- RAISE (superman / lifts) --- */
+.anim-raise .sf-arm-left { animation: raiseArmL 1.6s ease-in-out infinite; }
+.anim-raise .sf-arm-right { animation: raiseArmR 1.6s ease-in-out infinite; }
+.anim-raise .sf-leg-left { animation: raiseLegL 1.6s ease-in-out infinite; }
+.anim-raise .sf-leg-right { animation: raiseLegR 1.6s ease-in-out infinite; }
+@keyframes raiseArmL { 0%,100% { transform: rotate(0deg); } 50% { transform: rotate(-30deg); } }
+@keyframes raiseArmR { 0%,100% { transform: rotate(0deg); } 50% { transform: rotate(30deg); } }
+@keyframes raiseLegL { 0%,100% { transform: rotate(0deg); } 50% { transform: rotate(-10deg); } }
+@keyframes raiseLegR { 0%,100% { transform: rotate(0deg); } 50% { transform: rotate(10deg); } }
+
+/* --- DIP --- */
+.anim-dip .sf-torso-group { animation: dipTorso 1.1s ease-in-out infinite; }
+.anim-dip .sf-arm-left { animation: dipArmL 1.1s ease-in-out infinite; }
+.anim-dip .sf-arm-right { animation: dipArmR 1.1s ease-in-out infinite; }
+@keyframes dipTorso { 0%,100% { transform: translateY(0); } 50% { transform: translateY(9px); } }
+@keyframes dipArmL { 0%,100% { transform: rotate(0deg); } 50% { transform: rotate(15deg); } }
+@keyframes dipArmR { 0%,100% { transform: rotate(0deg); } 50% { transform: rotate(-15deg); } }
+
+/* --- STRETCH (slow hold) --- */
+.anim-stretch .sf-torso-group { animation: stretchTilt 3s ease-in-out infinite; }
+@keyframes stretchTilt { 0%,100% { transform: rotate(0deg); } 50% { transform: rotate(8deg); } }
+
+/* --- CRAWL (alternating) --- */
+.anim-crawl .sf-arm-left { animation: crawlArmL 1s ease-in-out infinite; }
+.anim-crawl .sf-arm-right { animation: crawlArmR 1s ease-in-out infinite; }
+.anim-crawl .sf-leg-left { animation: crawlLegR 1s ease-in-out infinite; }
+.anim-crawl .sf-leg-right { animation: crawlLegL 1s ease-in-out infinite; }
+@keyframes crawlArmL { 0%,100% { transform: rotate(-10deg); } 50% { transform: rotate(25deg); } }
+@keyframes crawlArmR { 0%,100% { transform: rotate(10deg); } 50% { transform: rotate(-25deg); } }
+@keyframes crawlLegL { 0%,100% { transform: rotate(-8deg); } 50% { transform: rotate(20deg); } }
+@keyframes crawlLegR { 0%,100% { transform: rotate(8deg); } 50% { transform: rotate(-20deg); } }
+
+/* --- TWIST (bicycle crunch style) --- */
+.anim-twist .sf-torso-group { animation: twistTorso 1.2s ease-in-out infinite; }
+.anim-twist .sf-leg-left { animation: twistLegL 1.2s ease-in-out infinite; }
+.anim-twist .sf-leg-right { animation: twistLegR 1.2s ease-in-out infinite; }
+@keyframes twistTorso { 0%,100% { transform: rotate(-6deg); } 50% { transform: rotate(6deg); } }
+@keyframes twistLegL { 0%,100% { transform: rotate(-15deg); } 50% { transform: rotate(15deg); } }
+@keyframes twistLegR { 0%,100% { transform: rotate(15deg); } 50% { transform: rotate(-15deg); } }
+
+/* --- OVERRIDE: exercise-item now shows demo + description side by side, always visible --- */
+.exercise-item p {
+  max-height: none;
+  overflow: visible;
+  margin-top: 6px;
+}
+.exercise-item:hover { cursor: default; }
+@media (max-width: 600px) {
+  .exercise-item { flex-direction: column; }
+  .exercise-demo { width: 100%; height: 90px; }
 }
