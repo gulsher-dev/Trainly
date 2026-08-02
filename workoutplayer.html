@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Guided Workout — Trainly</title>
+<link rel="stylesheet" href="style.css">
+<style>
+.wp-container { max-width: 560px; margin: 0 auto; padding: 140px 20px 100px; text-align: center; }
+
+.wp-picker-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px,1fr)); gap: 16px; margin-top: 30px; text-align: left; }
+.wp-picker-card { background: var(--white); border: 1px solid #ece5dd; border-radius: 16px; padding: 22px; cursor: pointer; transition: border-color .2s ease, transform .2s ease; }
+.wp-picker-card:hover { border-color: var(--orange); transform: translateY(-3px); }
+.wp-picker-card h3 { font-size: 15px; margin-bottom: 4px; }
+.wp-picker-card p { font-size: 12.5px; color: var(--gray); }
+
+.wp-intro h1 { font-size: clamp(26px,4vw,36px); font-weight: 800; margin-bottom: 10px; }
+.wp-intro p { color: var(--gray); margin-bottom: 30px; }
+.wp-start-btn { background: var(--black); color: var(--white); border: none; padding: 16px 34px; border-radius: 999px; font-weight: 800; font-size: 15px; cursor: pointer; box-shadow: 0 0 0 1.5px var(--orange), 0 0 25px 4px var(--orange-glow); }
+.wp-start-btn:active { transform: scale(0.96); }
+
+.wp-progress { width: 100%; height: 6px; background: #ece5dd; border-radius: 999px; overflow: hidden; margin-bottom: 26px; }
+.wp-progress-fill { height: 100%; background: var(--orange); width: 0%; transition: width .4s ease; }
+
+.wp-phase-label { font-size: 12.5px; font-weight: 800; letter-spacing: 1px; color: var(--gray); margin-bottom: 6px; }
+.wp-rest-label { color: var(--orange); }
+
+.wp-demo-wrap { width: 180px; height: 200px; margin: 0 auto 20px; background: #faf7f3; border-radius: 20px; display: flex; align-items: center; justify-content: center; }
+.wp-demo-wrap .stick-figure { width: 130px; height: 150px; }
+.wp-demo-wrap .stick-figure line { stroke-width: 9; }
+
+#wpExerciseName { font-size: 24px; font-weight: 800; margin-bottom: 4px; }
+#wpExerciseSub { color: var(--gray); font-size: 13.5px; margin-bottom: 20px; }
+
+.wp-timer { font-size: 64px; font-weight: 800; color: var(--black); margin-bottom: 26px; font-variant-numeric: tabular-nums; }
+.wp-timer.resting { color: var(--orange); }
+
+.wp-controls { display: flex; gap: 14px; justify-content: center; }
+.wp-controls button { padding: 14px 26px; border-radius: 999px; font-weight: 700; font-size: 14px; cursor: pointer; border: none; }
+.wp-pause-btn { background: var(--black); color: var(--white); }
+.wp-skip-btn { background: var(--white); border: 1px solid #ddd6cc !important; color: var(--black); }
+
+.wp-complete h1 { font-size: 32px; font-weight: 800; margin-bottom: 12px; }
+.wp-complete p { color: var(--gray); margin-bottom: 26px; }
+</style>
+</head>
+<body>
+
+<!-- ===== NAVBAR (Dynamic Island style) ===== -->
+<header class="nav-wrapper" id="navWrapper">
+  <div class="nav-pill" id="navPill">
+
+    <a href="index.html" class="nav-logo">
+      <span class="logo-dot"></span> Trainly
+    </a>
+
+    <nav class="nav-links">
+      <div class="nav-item" data-menu="plans">
+        <span>PLANS</span>
+        <svg class="chevron" width="10" height="6" viewBox="0 0 10 6"><path d="M1 1L5 5L9 1" stroke="currentColor" stroke-width="1.5" fill="none"/></svg>
+      </div>
+      <div class="nav-item" data-menu="tools">
+        <span>TOOLS</span>
+        <svg class="chevron" width="10" height="6" viewBox="0 0 10 6"><path d="M1 1L5 5L9 1" stroke="currentColor" stroke-width="1.5" fill="none"/></svg>
+      </div>
+      <div class="nav-item" data-menu="library">
+        <span>EXERCISES</span>
+        <svg class="chevron" width="10" height="6" viewBox="0 0 10 6"><path d="M1 1L5 5L9 1" stroke="currentColor" stroke-width="1.5" fill="none"/></svg>
+      </div>
+      <a href="tracker.html" class="nav-item">
+        <span>TRACKER</span>
+      </a>
+    </nav>
+
+    <a href="workout-player.html" class="nav-cta">START FREE →</a>
+
+    <div class="nav-collapsed-label">
+      <span class="pulse-dot"></span> MENU
+    </div>
+
+  </div>
+
+  <div class="mega-menu" id="megaMenu">
+
+    <div class="mega-panel" data-panel="plans">
+      <div class="mega-head">
+        <span class="mega-eyebrow">PLANS</span>
+        <h2>Train anywhere, zero equipment needed</h2>
+        <p>Structured home workout plans built around your goal and your schedule.</p>
+      </div>
+      <div class="mega-cols">
+        <div class="mega-col">
+          <h4>BY GOAL</h4>
+          <a href="fatloss.html">🔥 Fat Loss</a>
+          <a href="musclebuilding.html">💪 Muscle Building</a>
+          <a href="generalfitness.html">⚡ General Fitness</a>
+          <a href="flexibility.html">🧘 Flexibility & Mobility</a>
+        </div>
+        <div class="mega-col">
+          <h4>MORE</h4>
+          <a href="plans.html">📋 All Plans</a>
+          <a href="workout-player.html">▶️ Guided Workout Player</a>
+        </div>
+        <div class="mega-col highlight-card">
+          <span class="hc-tag">FEATURED PLAN</span>
+          <div class="hc-number">30</div>
+          <span class="hc-label">DAY FAT LOSS CHALLENGE</span>
+          <a href="fatloss.html" class="hc-link">See Plan →</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="mega-panel" data-panel="tools">
+      <div class="mega-head">
+        <span class="mega-eyebrow">TOOLS</span>
+        <h2>Know your numbers</h2>
+        <p>Free calculators to plan your training and nutrition properly.</p>
+      </div>
+      <div class="mega-cols">
+        <div class="mega-col">
+          <h4>CALCULATORS</h4>
+          <a href="calculators.html#protein">🥩 Protein Calculator</a>
+          <a href="calculators.html#tdee">🔥 Calorie / TDEE Calculator</a>
+          <a href="calculators.html#bmi">⚖️ BMI Calculator</a>
+          <a href="calculators.html#onerep">🏋️ One-Rep Max Calculator</a>
+        </div>
+        <div class="mega-col">
+          <h4>AI POWERED</h4>
+          <a href="#" class="soon-link">🤖 AI Plan Generator <span class="soon-tag">Soon</span></a>
+          <a href="#" class="soon-link">📋 AI Diet Suggestions <span class="soon-tag">Soon</span></a>
+        </div>
+      </div>
+    </div>
+
+    <div class="mega-panel" data-panel="library">
+      <div class="mega-head">
+        <span class="mega-eyebrow">EXERCISES</span>
+        <h2>Every move, explained</h2>
+        <p>Searchable library of home exercises by muscle group.</p>
+      </div>
+      <div class="mega-cols">
+        <div class="mega-col">
+          <h4>MUSCLE GROUPS</h4>
+          <a href="exercises.html#chest">Chest</a>
+          <a href="exercises.html#back">Back</a>
+          <a href="exercises.html#legs">Legs</a>
+          <a href="exercises.html#arms">Arms</a>
+          <a href="exercises.html#core">Core</a>
+          <a href="exercises.html#fullbody">Full Body</a>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</header>
+
+<div class="wp-container">
+
+  <!-- PICKER (shown when no plan/muscle is specified) -->
+  <div id="wpPicker">
+    <div class="page-hero" style="margin-bottom:20px;">
+      <span class="section-eyebrow">GUIDED WORKOUT</span>
+      <h1>Pick something to train</h1>
+      <p>We'll guide you through it, one exercise at a time.</p>
+    </div>
+    <div class="wp-picker-grid">
+      <div class="wp-picker-card" onclick="location.href='workout-player.html?plan=fatloss'"><h3>🔥 Fat Loss</h3><p>Beginner circuit</p></div>
+      <div class="wp-picker-card" onclick="location.href='workout-player.html?plan=musclebuilding'"><h3>💪 Muscle Building</h3><p>Beginner strength</p></div>
+      <div class="wp-picker-card" onclick="location.href='workout-player.html?plan=generalfitness'"><h3>⚡ General Fitness</h3><p>Beginner mix</p></div>
+      <div class="wp-picker-card" onclick="location.href='workout-player.html?plan=flexibility'"><h3>🧘 Flexibility</h3><p>Beginner stretch</p></div>
+      <div class="wp-picker-card" onclick="location.href='workout-player.html?muscle=chest'"><h3>Chest</h3><p>6-exercise session</p></div>
+      <div class="wp-picker-card" onclick="location.href='workout-player.html?muscle=back'"><h3>Back</h3><p>6-exercise session</p></div>
+      <div class="wp-picker-card" onclick="location.href='workout-player.html?muscle=legs'"><h3>Legs</h3><p>6-exercise session</p></div>
+      <div class="wp-picker-card" onclick="location.href='workout-player.html?muscle=arms'"><h3>Arms</h3><p>6-exercise session</p></div>
+      <div class="wp-picker-card" onclick="location.href='workout-player.html?muscle=core'"><h3>Core</h3><p>6-exercise session</p></div>
+      <div class="wp-picker-card" onclick="location.href='workout-player.html?muscle=fullbody'"><h3>Full Body</h3><p>6-exercise session</p></div>
+    </div>
+  </div>
+
+  <!-- INTRO (before starting) -->
+  <div id="wpIntro" style="display:none;">
+    <h1 id="wpIntroTitle"></h1>
+    <p id="wpIntroSub"></p>
+    <button class="wp-start-btn" onclick="startWorkout()">▶ Start Workout</button>
+  </div>
+
+  <!-- PLAYER (active workout) -->
+  <div id="wpPlayer" style="display:none;">
+    <div class="wp-progress"><div class="wp-progress-fill" id="wpProgressFill"></div></div>
+    <div class="wp-phase-label" id="wpPhaseLabel">EXERCISE 1 OF 6</div>
+    <div class="wp-demo-wrap" id="wpDemoWrap"></div>
+    <h2 id="wpExerciseName">—</h2>
+    <div id="wpExerciseSub"></div>
+    <div class="wp-timer" id="wpTimer">0</div>
+    <div class="wp-controls">
+      <button class="wp-pause-btn" id="wpPauseBtn" onclick="pauseResume()">Pause</button>
+      <button class="wp-skip-btn" onclick="skipPhase()">Skip</button>
+    </div>
+  </div>
+
+  <!-- COMPLETE -->
+  <div id="wpComplete" class="wp-complete" style="display:none;">
+    <h1>🎉 Workout Complete!</h1>
+    <p id="wpSummary"></p>
+    <a href="tracker.html" class="hero-cta">View Your Progress</a>
+  </div>
+
+</div>
+
+<script>
+// ===== EXERCISE DATA =====
+const PLAN_DATA = {
+  fatloss: {
+    beginner: [
+      {name:"Jumping Jacks", anim:"jump", sub:"3 x 30s", seconds:90},
+      {name:"Bodyweight Squats", anim:"squat", sub:"3 x 12", seconds:75},
+      {name:"Push-Ups", anim:"pushup", sub:"3 x 8", seconds:60},
+      {name:"Mountain Climbers", anim:"crawl", sub:"3 x 20s", seconds:60},
+      {name:"Plank", anim:"plank", sub:"3 x 20s", seconds:60}
+    ]
+  },
+  musclebuilding: {
+    beginner: [
+      {name:"Incline Push-Ups", anim:"pushup", sub:"3 x 10", seconds:70},
+      {name:"Bodyweight Squats", anim:"squat", sub:"3 x 12", seconds:75},
+      {name:"Superman Hold", anim:"raise", sub:"3 x 15s", seconds:45},
+      {name:"Chair Dips", anim:"dip", sub:"3 x 10", seconds:60}
+    ]
+  },
+  generalfitness: {
+    beginner: [
+      {name:"Jumping Jacks", anim:"jump", sub:"2 x 30s", seconds:60},
+      {name:"Bodyweight Squats", anim:"squat", sub:"2 x 10", seconds:50},
+      {name:"Push-Ups", anim:"pushup", sub:"2 x 8", seconds:40},
+      {name:"Plank", anim:"plank", sub:"2 x 20s", seconds:40}
+    ]
+  },
+  flexibility: {
+    beginner: [
+      {name:"Cat-Cow Stretch", anim:"stretch", sub:"2 x 10", seconds:50},
+      {name:"Standing Hamstring Stretch", anim:"stretch", sub:"2 x 20s/leg", seconds:80},
+      {name:"Shoulder Rolls", anim:"stretch", sub:"2 x 10", seconds:40}
+    ]
+  }
+};
+
+const MUSCLE_DATA = {
+  chest: [
+    {name:"Push-Ups", anim:"pushup"}, {name:"Incline Push-Ups", anim:"pushup"},
+    {name:"Wide Push-Ups", anim:"pushup"}, {name:"Diamond Push-Ups", anim:"pushup"},
+    {name:"Staggered Push-Ups", anim:"pushup"}, {name:"Decline Push-Ups", anim:"pushup"}
+  ],
+  back: [
+    {name:"Superman Hold", anim:"raise"}, {name:"Reverse Snow Angels", anim:"raise"},
+    {name:"Prone Y-Raises", anim:"raise"}, {name:"Towel Rows", anim:"pull"},
+    {name:"Doorframe Rows", anim:"pull"}, {name:"Scapular Pulls", anim:"pull"}
+  ],
+  legs: [
+    {name:"Bodyweight Squats", anim:"squat"}, {name:"Lunges", anim:"lunge"},
+    {name:"Glute Bridges", anim:"raise"}, {name:"Wall Sit", anim:"squat"},
+    {name:"Bulgarian Split Squats", anim:"lunge"}, {name:"Step-Ups", anim:"lunge"}
+  ],
+  arms: [
+    {name:"Chair Dips", anim:"dip"}, {name:"Wall/Table Curls", anim:"pull"},
+    {name:"Arm Circles", anim:"raise"}, {name:"Tricep Kickbacks", anim:"pull"},
+    {name:"Concentration Curls", anim:"pull"}, {name:"Pike Push-Ups", anim:"pushup"}
+  ],
+  core: [
+    {name:"Plank", anim:"plank"}, {name:"Dead Bug", anim:"twist"},
+    {name:"Side Plank", anim:"plank"}, {name:"Bicycle Crunches", anim:"twist"},
+    {name:"Russian Twists", anim:"twist"}, {name:"Leg Raises", anim:"raise"}
+  ],
+  fullbody: [
+    {name:"Burpees", anim:"jump"}, {name:"Mountain Climbers", anim:"crawl"},
+    {name:"Jumping Jacks", anim:"jump"}, {name:"High Knees", anim:"jump"},
+    {name:"Bear Crawl", anim:"crawl"}, {name:"Inchworms", anim:"crawl"}
+  ]
+};
+
+const ANIM_SECONDS = { squat:40, pushup:35, plank:30, jump:30, lunge:40, pull:35, raise:30, dip:30, stretch:45, crawl:35, twist:35 };
+
+function stickFigureSVG() {
+  return `<svg class="stick-figure" viewBox="0 0 120 140" xmlns="http://www.w3.org/2000/svg">
+    <g class="sf-torso-group">
+      <circle class="sf-head" cx="60" cy="22" r="12"></circle>
+      <line x1="60" y1="34" x2="60" y2="82"></line>
+      <g class="sf-arm-left" style="transform-box:fill-box; transform-origin:0px 8px;"><line x1="60" y1="42" x2="35" y2="68"></line></g>
+      <g class="sf-arm-right" style="transform-box:fill-box; transform-origin:0px 8px;"><line x1="60" y1="42" x2="85" y2="68"></line></g>
+    </g>
+    <g class="sf-leg-left" style="transform-box:fill-box; transform-origin:0px 0px;"><line x1="60" y1="82" x2="42" y2="122"></line></g>
+    <g class="sf-leg-right" style="transform-box:fill-box; transform-origin:0px 0px;"><line x1="60" y1="82" x2="78" y2="122"></line></g>
+  </svg>`;
+}
+
+// ===== BUILD WORKOUT FROM URL =====
+const params = new URLSearchParams(location.search);
+const planKey = params.get('plan');
+const levelKey = params.get('level') || 'beginner';
+const muscleKey = params.get('muscle');
+
+let workoutList = [];
+let workoutTitle = '';
+let restSeconds = 20;
+let source = null;
+
+if (planKey && PLAN_DATA[planKey]) {
+  const levelData = PLAN_DATA[planKey][levelKey] || PLAN_DATA[planKey]['beginner'];
+  workoutList = levelData.map(e => ({...e}));
+  workoutTitle = planKey.charAt(0).toUpperCase() + planKey.slice(1) + ' Plan';
+  restSeconds = 20;
+  source = 'plan:' + planKey;
+} else if (muscleKey && MUSCLE_DATA[muscleKey]) {
+  workoutList = MUSCLE_DATA[muscleKey].map(e => ({...e, sub:'', seconds: ANIM_SECONDS[e.anim] || 40}));
+  workoutTitle = muscleKey.charAt(0).toUpperCase() + muscleKey.slice(1) + ' Session';
+  restSeconds = 15;
+  source = 'muscle:' + muscleKey;
+}
+
+// ===== SHOW INTRO OR PICKER =====
+if (workoutList.length > 0) {
+  document.getElementById('wpPicker').style.display = 'none';
+  document.getElementById('wpIntro').style.display = 'block';
+  document.getElementById('wpIntroTitle').textContent = workoutTitle;
+  const totalWork = workoutList.reduce((sum,e) => sum + e.seconds, 0);
+  const totalRest = (workoutList.length - 1) * restSeconds;
+  const totalMin = Math.ceil((totalWork + totalRest) / 60);
+  document.getElementById('wpIntroSub').textContent = `${workoutList.length} exercises • about ${totalMin} min`;
+}
+
+// ===== BEEP SOUND (Web Audio, no file needed) =====
+function playBeep() {
+  try {
+    const ctx = new (window.AudioContext || window.webkitAudioContext)();
+    const osc = ctx.createOscillator();
+    const gain = ctx.createGain();
+    osc.connect(gain);
+    gain.connect(ctx.destination);
+    osc.type = 'sine';
+    osc.frequency.value = 880;
+    gain.gain.setValueAtTime(0.3, ctx.currentTime);
+    gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.5);
+    osc.start();
+    osc.stop(ctx.currentTime + 0.5);
+  } catch (e) { /* audio not available, fail silently */ }
+}
+
+// ===== PLAYER STATE =====
+let currentIndex = 0;
+let currentPhase = 'work'; // 'work' or 'rest'
+let remaining = 0;
+let timerId = null;
+let isPaused = false;
+
+function startWorkout() {
+  document.getElementById('wpIntro').style.display = 'none';
+  document.getElementById('wpPlayer').style.display = 'block';
+  currentIndex = 0;
+  currentPhase = 'work';
+  loadPhase();
+}
+
+function loadPhase() {
+  const exercise = workoutList[currentIndex];
+  const demoWrap = document.getElementById('wpDemoWrap');
+  const timerEl = document.getElementById('wpTimer');
+  const phaseLabel = document.getElementById('wpPhaseLabel');
+
+  if (currentPhase === 'work') {
+    remaining = exercise.seconds;
+    demoWrap.innerHTML = stickFigureSVG();
+    demoWrap.querySelector('.stick-figure').classList.add('anim-' + exercise.anim);
+    document.getElementById('wpExerciseName').textContent = exercise.name;
+    document.getElementById('wpExerciseSub').textContent = exercise.sub || '';
+    phaseLabel.textContent = `EXERCISE ${currentIndex + 1} OF ${workoutList.length}`;
+    phaseLabel.classList.remove('wp-rest-label');
+    timerEl.classList.remove('resting');
+  } else {
+    remaining = restSeconds;
+    demoWrap.innerHTML = '<div style="font-size:40px;">😮‍💨</div>';
+    document.getElementById('wpExerciseName').textContent = 'Rest';
+    document.getElementById('wpExerciseSub').textContent = 'Next up: ' + workoutList[currentIndex + 1].name;
+    phaseLabel.textContent = 'RESTING';
+    phaseLabel.classList.add('wp-rest-label');
+    timerEl.classList.add('resting');
+  }
+
+  updateProgress();
+  updateTimerDisplay();
+  runTimer();
+}
+
+function updateProgress() {
+  const totalPhases = workoutList.length * 2 - 1;
+  const completedPhases = currentIndex * 2 + (currentPhase === 'rest' ? 1 : 0);
+  const pct = Math.min(100, (completedPhases / totalPhases) * 100);
+  document.getElementById('wpProgressFill').style.width = pct + '%';
+}
+
+function updateTimerDisplay() {
+  document.getElementById('wpTimer').textContent = remaining;
+}
+
+function runTimer() {
+  clearInterval(timerId);
+  timerId = setInterval(() => {
+    if (isPaused) return;
+    remaining--;
+    updateTimerDisplay();
+    if (remaining <= 0) {
+      clearInterval(timerId);
+      playBeep();
+      advancePhase();
+    }
+  }, 1000);
+}
+
+function advancePhase() {
+  if (currentPhase === 'work') {
+    if (currentIndex < workoutList.length - 1) {
+      currentPhase = 'rest';
+      loadPhase();
+    } else {
+      finishWorkout();
+    }
+  } else {
+    currentIndex++;
+    currentPhase = 'work';
+    loadPhase();
+  }
+}
+
+function skipPhase() {
+  clearInterval(timerId);
+  playBeep();
+  advancePhase();
+}
+
+function pauseResume() {
+  isPaused = !isPaused;
+  document.getElementById('wpPauseBtn').textContent = isPaused ? 'Resume' : 'Pause';
+}
+
+function finishWorkout() {
+  document.getElementById('wpPlayer').style.display = 'none';
+  document.getElementById('wpComplete').style.display = 'block';
+  const totalSeconds = workoutList.reduce((s,e) => s + e.seconds, 0) + (workoutList.length - 1) * restSeconds;
+  const mins = Math.round(totalSeconds / 60);
+  document.getElementById('wpSummary').textContent = `${workoutList.length} exercises completed in about ${mins} minutes. Nice work.`;
+
+  // Log to tracker (same storage the Tracker page reads)
+  const today = new Date().toISOString().split('T')[0];
+  const data = JSON.parse(localStorage.getItem('trainlyTracker') || '{"workoutDates":[],"weightLog":[],"sessions":[]}');
+  if (!data.workoutDates.includes(today)) data.workoutDates.push(today);
+  if (!data.sessions) data.sessions = [];
+  data.sessions.push({ date: today, title: workoutTitle, exercises: workoutList.length, seconds: totalSeconds });
+  localStorage.setItem('trainlyTracker', JSON.stringify(data));
+}
+</script>
+
+<!-- ===== FOOTER ===== -->
+<footer class="footer">
+  <div class="footer-top">
+    <div class="footer-brand">
+      <span class="logo-dot"></span> Trainly
+    </div>
+    <div class="footer-links">
+      <a href="plans.html">Plans</a>
+      <a href="calculators.html">Tools</a>
+      <a href="exercises.html">Exercises</a>
+      <a href="tracker.html">Tracker</a>
+    </div>
+  </div>
+  <p class="footer-bottom">© 2026 Trainly. Train anywhere.</p>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>
