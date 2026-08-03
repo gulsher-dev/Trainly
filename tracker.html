@@ -5,6 +5,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Progress Tracker — Trainly</title>
 <link rel="stylesheet" href="style.css">
+<style>
+.chart-wrap { position: relative; min-height: 220px; }
+#weightChart { width: 100%; height: 220px; display: block; }
+</style>
 </head>
 <body>
 
@@ -140,6 +144,14 @@
   </div>
 
   <div class="tracker-card">
+    <h2>📈 Weight Progress</h2>
+    <div class="chart-wrap">
+      <canvas id="weightChart"></canvas>
+      <div class="empty-state" id="chartEmptyState" style="display:none;">Log at least 2 weight entries to see your progress graph.</div>
+    </div>
+  </div>
+
+  <div class="tracker-card">
     <h2>✅ Today's Workout</h2>
     <button class="streak-btn" id="workoutBtn" onclick="markWorkoutDone()">Mark Today's Workout Complete</button>
   </div>
@@ -158,7 +170,7 @@
 const today = new Date().toISOString().split('T')[0];
 
 function loadTracker() {
-  return JSON.parse(localStorage.getItem('trainlyTracker') || '{"workoutDates":[],"weightLog":[]}');
+  return JSON.parse(localStorage.getItem('trainlyTracker') || '{"workoutDates":[],"weightLog":[],"sessions":[]}');
 }
 
 function saveTracker(data) {
@@ -208,6 +220,8 @@ function render() {
       `<div class="weight-log-row"><span>${entry.date}</span><span>${entry.weight} kg</span></div>`
     ).join('');
   }
+
+  drawWeightChart(data.weightLog);
 }
 
 function markWorkoutDone() {
@@ -229,6 +243,125 @@ function addWeight() {
   input.value = '';
   render();
 }
+
+// ===== SMOOTH WEIGHT CHART (canvas) =====
+function drawWeightChart(weightLog) {
+  const canvas = document.getElementById('weightChart');
+  const emptyState = document.getElementById('chartEmptyState');
+
+  if (weightLog.length < 2) {
+    canvas.style.display = 'none';
+    emptyState.style.display = 'block';
+    return;
+  }
+  canvas.style.display = 'block';
+  emptyState.style.display = 'none';
+
+  const ctx = canvas.getContext('2d');
+  const dpr = window.devicePixelRatio || 1;
+  const cssWidth = canvas.parentElement.clientWidth;
+  const cssHeight = 220;
+
+  canvas.width = cssWidth * dpr;
+  canvas.height = cssHeight * dpr;
+  canvas.style.width = cssWidth + 'px';
+  canvas.style.height = cssHeight + 'px';
+  ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  ctx.clearRect(0, 0, cssWidth, cssHeight);
+
+  const padding = { top: 20, right: 16, bottom: 26, left: 40 };
+  const chartW = cssWidth - padding.left - padding.right;
+  const chartH = cssHeight - padding.top - padding.bottom;
+
+  const weights = weightLog.map(e => e.weight);
+  let min = Math.min(...weights);
+  let max = Math.max(...weights);
+  if (min === max) { min -= 2; max += 2; }
+  const rangePad = (max - min) * 0.15;
+  min -= rangePad;
+  max += rangePad;
+
+  const points = weightLog.map((entry, i) => ({
+    x: padding.left + (i / (weightLog.length - 1)) * chartW,
+    y: padding.top + chartH - ((entry.weight - min) / (max - min)) * chartH,
+    weight: entry.weight
+  }));
+
+  // Grid lines (horizontal, 3 lines)
+  ctx.strokeStyle = '#ece5dd';
+  ctx.lineWidth = 1;
+  for (let i = 0; i <= 2; i++) {
+    const y = padding.top + (chartH / 2) * i;
+    ctx.beginPath();
+    ctx.moveTo(padding.left, y);
+    ctx.lineTo(cssWidth - padding.right, y);
+    ctx.stroke();
+  }
+
+  // Y-axis labels
+  ctx.fillStyle = '#9a9a9a';
+  ctx.font = '11px Arial';
+  ctx.textAlign = 'right';
+  ctx.fillText(max.toFixed(1), padding.left - 8, padding.top + 4);
+  ctx.fillText(min.toFixed(1), padding.left - 8, padding.top + chartH + 4);
+
+  // Smooth line path (quadratic midpoint smoothing)
+  ctx.beginPath();
+  ctx.moveTo(points[0].x, points[0].y);
+  for (let i = 1; i < points.length; i++) {
+    const midX = (points[i - 1].x + points[i].x) / 2;
+    const midY = (points[i - 1].y + points[i].y) / 2;
+    ctx.quadraticCurveTo(points[i - 1].x, points[i - 1].y, midX, midY);
+  }
+  ctx.quadraticCurveTo(
+    points[points.length - 2].x, points[points.length - 2].y,
+    points[points.length - 1].x, points[points.length - 1].y
+  );
+
+  // Gradient fill under the line
+  const fillPath = new Path2D();
+  fillPath.moveTo(points[0].x, padding.top + chartH);
+  fillPath.lineTo(points[0].x, points[0].y);
+  for (let i = 1; i < points.length; i++) {
+    const midX = (points[i - 1].x + points[i].x) / 2;
+    const midY = (points[i - 1].y + points[i].y) / 2;
+    fillPath.quadraticCurveTo(points[i - 1].x, points[i - 1].y, midX, midY);
+  }
+  fillPath.quadraticCurveTo(
+    points[points.length - 2].x, points[points.length - 2].y,
+    points[points.length - 1].x, points[points.length - 1].y
+  );
+  fillPath.lineTo(points[points.length - 1].x, padding.top + chartH);
+  fillPath.closePath();
+
+  const gradient = ctx.createLinearGradient(0, padding.top, 0, padding.top + chartH);
+  gradient.addColorStop(0, 'rgba(255,122,26,0.25)');
+  gradient.addColorStop(1, 'rgba(255,122,26,0)');
+  ctx.fillStyle = gradient;
+  ctx.fill(fillPath);
+
+  ctx.strokeStyle = '#ff7a1a';
+  ctx.lineWidth = 2.5;
+  ctx.lineJoin = 'round';
+  ctx.lineCap = 'round';
+  ctx.stroke();
+
+  // Dots at each point
+  points.forEach(p => {
+    ctx.beginPath();
+    ctx.arc(p.x, p.y, 4, 0, Math.PI * 2);
+    ctx.fillStyle = '#ffffff';
+    ctx.fill();
+    ctx.lineWidth = 2;
+    ctx.strokeStyle = '#ff7a1a';
+    ctx.stroke();
+  });
+}
+
+window.addEventListener('resize', () => {
+  const data = loadTracker();
+  drawWeightChart(data.weightLog);
+});
 
 render();
 </script>
