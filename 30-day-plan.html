@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>30-Day Plan — Trainly</title>
+<link rel="stylesheet" href="style.css">
+<style>
+.thirty-day-summary { text-align:center; margin-bottom: 40px; }
+.thirty-progress { width: 100%; max-width: 500px; height: 10px; background: #ece5dd; border-radius: 999px; overflow: hidden; margin: 16px auto 0; }
+.thirty-progress-fill { height: 100%; background: var(--orange); width: 0%; transition: width .5s ease; }
+.thirty-progress-label { font-size: 13px; color: var(--gray); margin-top: 10px; }
+
+.day-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 14px; }
+
+.day-card {
+  background: var(--white);
+  border: 1px solid #ece5dd;
+  border-radius: 16px;
+  padding: 18px;
+  text-align: center;
+  transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease;
+  cursor: pointer;
+}
+.day-card:hover { transform: translateY(-4px); box-shadow: 0 14px 30px rgba(0,0,0,0.08); border-color: var(--orange); }
+
+.day-card.rest-day { background: #faf7f3; cursor: default; }
+.day-card.rest-day:hover { transform: none; box-shadow: none; border-color: #ece5dd; }
+
+.day-card.completed { background: var(--black); border-color: var(--black); }
+.day-card.completed .day-num, .day-card.completed .day-focus { color: var(--white); }
+.day-card.completed .day-icon { color: var(--orange); }
+
+.day-num { font-size: 11px; font-weight: 800; color: var(--gray); letter-spacing: 0.5px; }
+.day-icon { font-size: 26px; margin: 8px 0; }
+.day-focus { font-size: 13px; font-weight: 700; }
+.day-check { font-size: 11px; margin-top: 8px; color: var(--orange); font-weight: 700; }
+</style>
+</head>
+<body>
+
+<!-- ===== NAVBAR (Dynamic Island style) ===== -->
+<header class="nav-wrapper" id="navWrapper">
+  <div class="nav-pill" id="navPill">
+
+    <a href="index.html" class="nav-logo">
+      <span class="logo-dot"></span> Trainly
+    </a>
+
+    <nav class="nav-links">
+      <div class="nav-item" data-menu="plans">
+        <span>PLANS</span>
+        <svg class="chevron" width="10" height="6" viewBox="0 0 10 6"><path d="M1 1L5 5L9 1" stroke="currentColor" stroke-width="1.5" fill="none"/></svg>
+      </div>
+      <div class="nav-item" data-menu="tools">
+        <span>TOOLS</span>
+        <svg class="chevron" width="10" height="6" viewBox="0 0 10 6"><path d="M1 1L5 5L9 1" stroke="currentColor" stroke-width="1.5" fill="none"/></svg>
+      </div>
+      <div class="nav-item" data-menu="library">
+        <span>EXERCISES</span>
+        <svg class="chevron" width="10" height="6" viewBox="0 0 10 6"><path d="M1 1L5 5L9 1" stroke="currentColor" stroke-width="1.5" fill="none"/></svg>
+      </div>
+      <a href="tracker.html" class="nav-item">
+        <span>TRACKER</span>
+      </a>
+    </nav>
+
+    <a href="workout-player.html" class="nav-cta">START FREE →</a>
+
+    <div class="nav-collapsed-label">
+      <span class="pulse-dot"></span> MENU
+    </div>
+
+  </div>
+
+  <div class="mega-menu" id="megaMenu">
+
+    <div class="mega-panel" data-panel="plans">
+      <div class="mega-head">
+        <span class="mega-eyebrow">PLANS</span>
+        <h2>Train anywhere, zero equipment needed</h2>
+        <p>Structured home workout plans built around your goal and your schedule.</p>
+      </div>
+      <div class="mega-cols">
+        <div class="mega-col">
+          <h4>BY GOAL</h4>
+          <a href="fatloss.html">🔥 Fat Loss</a>
+          <a href="musclebuilding.html">💪 Muscle Building</a>
+          <a href="generalfitness.html">⚡ General Fitness</a>
+          <a href="flexibility.html">🧘 Flexibility & Mobility</a>
+        </div>
+        <div class="mega-col">
+          <h4>MORE</h4>
+          <a href="plans.html">📋 All Plans</a>
+          <a href="workout-player.html">▶️ Guided Workout Player</a>
+          <a href="30-day-plan.html">📅 30-Day Plan</a>
+        </div>
+        <div class="mega-col highlight-card">
+          <span class="hc-tag">FEATURED PLAN</span>
+          <div class="hc-number">30</div>
+          <span class="hc-label">DAY FAT LOSS CHALLENGE</span>
+          <a href="fatloss.html" class="hc-link">See Plan →</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="mega-panel" data-panel="tools">
+      <div class="mega-head">
+        <span class="mega-eyebrow">TOOLS</span>
+        <h2>Know your numbers</h2>
+        <p>Free calculators to plan your training and nutrition properly.</p>
+      </div>
+      <div class="mega-cols">
+        <div class="mega-col">
+          <h4>CALCULATORS</h4>
+          <a href="calculators.html#protein">🥩 Protein Calculator</a>
+          <a href="calculators.html#tdee">🔥 Calorie / TDEE Calculator</a>
+          <a href="calculators.html#bmi">⚖️ BMI Calculator</a>
+          <a href="calculators.html#onerep">🏋️ One-Rep Max Calculator</a>
+        </div>
+        <div class="mega-col">
+          <h4>AI POWERED</h4>
+          <a href="#" class="soon-link">🤖 AI Plan Generator <span class="soon-tag">Soon</span></a>
+          <a href="#" class="soon-link">📋 AI Diet Suggestions <span class="soon-tag">Soon</span></a>
+        </div>
+      </div>
+    </div>
+
+    <div class="mega-panel" data-panel="library">
+      <div class="mega-head">
+        <span class="mega-eyebrow">EXERCISES</span>
+        <h2>Every move, explained</h2>
+        <p>Searchable library of home exercises by muscle group.</p>
+      </div>
+      <div class="mega-cols">
+        <div class="mega-col">
+          <h4>MUSCLE GROUPS</h4>
+          <a href="exercises.html#chest">Chest</a>
+          <a href="exercises.html#back">Back</a>
+          <a href="exercises.html#legs">Legs</a>
+          <a href="exercises.html#arms">Arms</a>
+          <a href="exercises.html#core">Core</a>
+          <a href="exercises.html#fullbody">Full Body</a>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</header>
+
+<main class="page-content" style="max-width: 900px;">
+  <div class="page-hero">
+    <span class="section-eyebrow">30-DAY PLAN</span>
+    <h1>Your 30-day challenge</h1>
+    <p>A different focus each day, with rest days built in. Tap any day to start.</p>
+  </div>
+
+  <div class="thirty-day-summary">
+    <div class="thirty-progress"><div class="thirty-progress-fill" id="thirtyProgressFill"></div></div>
+    <div class="thirty-progress-label" id="thirtyProgressLabel">0 of 30 days completed</div>
+  </div>
+
+  <div class="day-grid" id="dayGrid"></div>
+</main>
+
+<script>
+const FOCUS_CONFIG = {
+  chest: { label: 'Chest', icon: '💪', muscle: 'chest' },
+  legs: { label: 'Legs', icon: '🦵', muscle: 'legs' },
+  back: { label: 'Back', icon: '🔙', muscle: 'back' },
+  arms: { label: 'Arms', icon: '💪', muscle: 'arms' },
+  core: { label: 'Core', icon: '🔥', muscle: 'core' },
+  fullbody: { label: 'Full Body', icon: '⚡', muscle: 'fullbody' },
+  rest: { label: 'Rest Day', icon: '😴', muscle: null }
+};
+
+const CYCLE = ['chest', 'legs', 'back', 'rest', 'arms', 'core', 'fullbody'];
+
+function loadPlanProgress() {
+  return JSON.parse(localStorage.getItem('trainly30DayPlan') || '{"completedDays":[]}');
+}
+
+function savePlanProgress(data) {
+  localStorage.setItem('trainly30DayPlan', JSON.stringify(data));
+}
+
+function toggleDay(dayNum) {
+  const data = loadPlanProgress();
+  const idx = data.completedDays.indexOf(dayNum);
+  if (idx >= 0) {
+    data.completedDays.splice(idx, 1);
+  } else {
+    data.completedDays.push(dayNum);
+  }
+  savePlanProgress(data);
+  renderCalendar();
+}
+
+function renderCalendar() {
+  const data = loadPlanProgress();
+  const grid = document.getElementById('dayGrid');
+  grid.innerHTML = '';
+
+  for (let day = 1; day <= 30; day++) {
+    const focusKey = CYCLE[(day - 1) % CYCLE.length];
+    const focus = FOCUS_CONFIG[focusKey];
+    const isCompleted = data.completedDays.includes(day);
+    const isRest = focusKey === 'rest';
+
+    const card = document.createElement('div');
+    card.className = 'day-card' + (isRest ? ' rest-day' : '') + (isCompleted ? ' completed' : '');
+    card.innerHTML = `
+      <div class="day-num">DAY ${day}</div>
+      <div class="day-icon">${focus.icon}</div>
+      <div class="day-focus">${focus.label}</div>
+      <div class="day-check">${isCompleted ? '✓ Done' : (isRest ? '' : 'Tap to start')}</div>
+    `;
+
+    if (!isRest) {
+      card.addEventListener('click', () => {
+        if (isCompleted) {
+          toggleDay(day); // tapping a completed day un-marks it
+        } else {
+          window.location.href = `workout-player.html?muscle=${focus.muscle}`;
+          // mark complete once they head into the workout
+          const d = loadPlanProgress();
+          if (!d.completedDays.includes(day)) {
+            d.completedDays.push(day);
+            savePlanProgress(d);
+          }
+        }
+      });
+    } else {
+      card.addEventListener('click', () => toggleDay(day));
+    }
+
+    grid.appendChild(card);
+  }
+
+  const completedCount = data.completedDays.length;
+  const pct = (completedCount / 30) * 100;
+  document.getElementById('thirtyProgressFill').style.width = pct + '%';
+  document.getElementById('thirtyProgressLabel').textContent = `${completedCount} of 30 days completed`;
+}
+
+renderCalendar();
+</script>
+
+<!-- ===== FOOTER ===== -->
+<footer class="footer">
+  <div class="footer-top">
+    <div class="footer-brand">
+      <span class="logo-dot"></span> Trainly
+    </div>
+    <div class="footer-links">
+      <a href="plans.html">Plans</a>
+      <a href="calculators.html">Tools</a>
+      <a href="exercises.html">Exercises</a>
+      <a href="tracker.html">Tracker</a>
+    </div>
+  </div>
+  <p class="footer-bottom">© 2026 Trainly. Train anywhere.</p>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>
