@@ -221,7 +221,7 @@
   <div id="wpComplete" class="wp-complete" style="display:none;">
     <h1>🎉 Workout Complete!</h1>
     <p id="wpSummary"></p>
-    <a href="tracker.html" class="hero-cta">View Your Progress</a>
+    <a href="tracker.html" class="hero-cta" id="wpCompleteLink">View Your Progress</a>
   </div>
 
 </div>
@@ -339,6 +339,98 @@ const MUSCLE_DATA = {
   ]
 };
 
+// ===== 30-DAY PLAN POOLS (12 exercises/day pulled in rotation from these pools) =====
+const THIRTYDAY_POOLS = {
+  fatloss: [
+    {name:"Jumping Jacks", anim:"jump", mode:"time", seconds:20},
+    {name:"Burpees", anim:"jump", mode:"reps", reps:10},
+    {name:"Mountain Climbers", anim:"crawl", mode:"time", seconds:20},
+    {name:"High Knees", anim:"jump", mode:"time", seconds:20},
+    {name:"Jump Squats", anim:"squat", mode:"reps", reps:12},
+    {name:"Push-Ups", anim:"pushup", mode:"reps", reps:12},
+    {name:"Bodyweight Squats", anim:"squat", mode:"reps", reps:15},
+    {name:"Plank", anim:"plank", mode:"time", seconds:30},
+    {name:"Bicycle Crunches", anim:"twist", mode:"reps", reps:20},
+    {name:"Skater Jumps", anim:"jump", mode:"reps", reps:12},
+    {name:"Star Jumps", anim:"jump", mode:"reps", reps:12},
+    {name:"Squat Thrusts", anim:"jump", mode:"reps", reps:10},
+    {name:"Lunges", anim:"lunge", mode:"reps", reps:12},
+    {name:"Bear Crawl", anim:"crawl", mode:"time", seconds:20},
+    {name:"Inchworms", anim:"crawl", mode:"reps", reps:8},
+    {name:"Plank Jacks", anim:"jump", mode:"reps", reps:15},
+    {name:"Russian Twists", anim:"twist", mode:"reps", reps:20},
+    {name:"Squat to Press", anim:"squat", mode:"reps", reps:10},
+    {name:"Diamond Push-Ups", anim:"pushup", mode:"reps", reps:10},
+    {name:"Glute Bridges", anim:"raise", mode:"reps", reps:15}
+  ],
+  musclebuilding: [
+    {name:"Incline Push-Ups", anim:"pushup", mode:"reps", reps:12},
+    {name:"Diamond Push-Ups", anim:"pushup", mode:"reps", reps:10},
+    {name:"Decline Push-Ups", anim:"pushup", mode:"reps", reps:10},
+    {name:"Chair Dips", anim:"dip", mode:"reps", reps:12},
+    {name:"Bulgarian Split Squats", anim:"lunge", mode:"reps", reps:10},
+    {name:"Bodyweight Squats", anim:"squat", mode:"reps", reps:15},
+    {name:"Towel Rows", anim:"pull", mode:"reps", reps:12},
+    {name:"Doorframe Rows", anim:"pull", mode:"reps", reps:12},
+    {name:"Pull-Ups", anim:"pull", mode:"reps", reps:6},
+    {name:"Superman Hold", anim:"raise", mode:"time", seconds:20},
+    {name:"Wall/Table Curls", anim:"pull", mode:"reps", reps:12},
+    {name:"Concentration Curls", anim:"pull", mode:"reps", reps:12},
+    {name:"Tricep Kickbacks", anim:"pull", mode:"reps", reps:12},
+    {name:"Pike Push-Ups", anim:"pushup", mode:"reps", reps:10},
+    {name:"Step-Ups", anim:"lunge", mode:"reps", reps:12},
+    {name:"Single-Leg Deadlift", anim:"lunge", mode:"reps", reps:10},
+    {name:"Renegade Rows", anim:"pull", mode:"reps", reps:10},
+    {name:"Wide Push-Ups", anim:"pushup", mode:"reps", reps:12},
+    {name:"Glute Bridges", anim:"raise", mode:"reps", reps:15},
+    {name:"Zottman Curls", anim:"pull", mode:"reps", reps:10}
+  ],
+  generalfitness: [
+    {name:"Jumping Jacks", anim:"jump", mode:"time", seconds:20},
+    {name:"Bodyweight Squats", anim:"squat", mode:"reps", reps:12},
+    {name:"Push-Ups", anim:"pushup", mode:"reps", reps:10},
+    {name:"Plank", anim:"plank", mode:"time", seconds:30},
+    {name:"Lunges", anim:"lunge", mode:"reps", reps:12},
+    {name:"Mountain Climbers", anim:"crawl", mode:"time", seconds:20},
+    {name:"Superman Hold", anim:"raise", mode:"time", seconds:20},
+    {name:"Bicycle Crunches", anim:"twist", mode:"reps", reps:16},
+    {name:"Wall Sit", anim:"squat", mode:"time", seconds:30},
+    {name:"Arm Circles", anim:"raise", mode:"time", seconds:20},
+    {name:"Glute Bridges", anim:"raise", mode:"reps", reps:15},
+    {name:"Dead Bug", anim:"twist", mode:"reps", reps:12},
+    {name:"High Knees", anim:"jump", mode:"time", seconds:20},
+    {name:"Chair Dips", anim:"dip", mode:"reps", reps:10},
+    {name:"Towel Rows", anim:"pull", mode:"reps", reps:12},
+    {name:"Step-Ups", anim:"lunge", mode:"reps", reps:12},
+    {name:"Side Plank", anim:"plank", mode:"time", seconds:20},
+    {name:"Calf Raises", anim:"squat", mode:"reps", reps:15},
+    {name:"Incline Push-Ups", anim:"pushup", mode:"reps", reps:12},
+    {name:"Flutter Kicks", anim:"raise", mode:"time", seconds:20}
+  ],
+  flexibility: [
+    {name:"Cat-Cow Stretch", anim:"stretch", mode:"reps", reps:10},
+    {name:"Standing Hamstring Stretch", anim:"stretch", mode:"time", seconds:20},
+    {name:"Shoulder Rolls", anim:"stretch", mode:"reps", reps:10},
+    {name:"World's Greatest Stretch", anim:"stretch", mode:"reps", reps:5},
+    {name:"Deep Squat Hold", anim:"stretch", mode:"time", seconds:30},
+    {name:"Hip Flexor Stretch", anim:"stretch", mode:"time", seconds:20},
+    {name:"Pancake Stretch", anim:"stretch", mode:"time", seconds:30},
+    {name:"Bridge Hold", anim:"stretch", mode:"time", seconds:20},
+    {name:"Child's Pose", anim:"stretch", mode:"time", seconds:30},
+    {name:"Cobra Stretch", anim:"stretch", mode:"time", seconds:20},
+    {name:"Seated Forward Fold", anim:"stretch", mode:"time", seconds:30},
+    {name:"Butterfly Stretch", anim:"stretch", mode:"time", seconds:30},
+    {name:"Neck Rolls", anim:"stretch", mode:"reps", reps:10},
+    {name:"Quad Stretch", anim:"stretch", mode:"time", seconds:20},
+    {name:"Side Bend Stretch", anim:"stretch", mode:"reps", reps:10},
+    {name:"Ankle Circles", anim:"stretch", mode:"reps", reps:10},
+    {name:"Spinal Twist", anim:"stretch", mode:"time", seconds:20},
+    {name:"Wrist Stretch", anim:"stretch", mode:"reps", reps:10},
+    {name:"Calf Stretch", anim:"stretch", mode:"time", seconds:20},
+    {name:"Chest Opener Stretch", anim:"stretch", mode:"time", seconds:20}
+  ]
+};
+
 function stickFigureSVG() {
   return `<svg class="stick-figure" viewBox="0 0 120 140" xmlns="http://www.w3.org/2000/svg">
     <g class="sf-torso-group">
@@ -357,12 +449,23 @@ const params = new URLSearchParams(location.search);
 const planKey = params.get('plan');
 const levelKey = params.get('level') || 'beginner';
 const muscleKey = params.get('muscle');
+const thirtyDayGoal = params.get('thirtyday');
+const thirtyDayNum = parseInt(params.get('day'), 10);
 
 let workoutList = [];
 let workoutTitle = '';
 let restSeconds = 20;
 
-if (planKey && PLAN_DATA[planKey]) {
+if (thirtyDayGoal && THIRTYDAY_POOLS[thirtyDayGoal] && thirtyDayNum >= 1 && thirtyDayNum <= 30) {
+  const pool = THIRTYDAY_POOLS[thirtyDayGoal];
+  workoutList = [];
+  for (let i = 0; i < 12; i++) {
+    workoutList.push({ ...pool[(thirtyDayNum - 1 + i) % pool.length] });
+  }
+  const goalLabel = thirtyDayGoal.charAt(0).toUpperCase() + thirtyDayGoal.slice(1);
+  workoutTitle = `${goalLabel} — Day ${thirtyDayNum}`;
+  restSeconds = 15;
+} else if (planKey && PLAN_DATA[planKey]) {
   const levelData = PLAN_DATA[planKey][levelKey] || PLAN_DATA[planKey]['beginner'];
   workoutList = levelData.map(e => ({...e}));
   workoutTitle = planKey.charAt(0).toUpperCase() + planKey.slice(1) + ' Plan';
@@ -543,6 +646,15 @@ function finishWorkout() {
   if (!data.sessions) data.sessions = [];
   data.sessions.push({ date: today, title: workoutTitle, exercises: workoutList.length });
   localStorage.setItem('trainlyTracker', JSON.stringify(data));
+
+  if (thirtyDayGoal && thirtyDayNum) {
+    const thirtyData = JSON.parse(localStorage.getItem('trainly30Day') || '{}');
+    if (!thirtyData[thirtyDayGoal]) thirtyData[thirtyDayGoal] = [];
+    if (!thirtyData[thirtyDayGoal].includes(thirtyDayNum)) thirtyData[thirtyDayGoal].push(thirtyDayNum);
+    localStorage.setItem('trainly30Day', JSON.stringify(thirtyData));
+    document.getElementById('wpCompleteLink').href = `30-day-plan.html?goal=${thirtyDayGoal}`;
+    document.getElementById('wpCompleteLink').textContent = 'Back to 30-Day Plan';
+  }
 }
 </script>
 
