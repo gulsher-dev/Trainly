@@ -34,6 +34,12 @@
 
 .wp-timer { font-size: 64px; font-weight: 800; color: var(--black); margin-bottom: 26px; font-variant-numeric: tabular-nums; }
 .wp-timer.resting { color: var(--orange); }
+.wp-timer.ticking { color: var(--orange); }
+
+.wp-reps-target { font-size: 48px; font-weight: 800; color: var(--black); margin-bottom: 10px; }
+.wp-reps-hint { font-size: 12.5px; color: var(--gray); margin-bottom: 24px; }
+.wp-done-btn { background: var(--orange); color: var(--white); border: none; padding: 16px 36px; border-radius: 999px; font-weight: 800; font-size: 15px; cursor: pointer; margin-bottom: 20px; }
+.wp-done-btn:active { transform: scale(0.96); }
 
 .wp-controls { display: flex; gap: 14px; justify-content: center; }
 .wp-controls button { padding: 14px 26px; border-radius: 999px; font-weight: 700; font-size: 14px; cursor: pointer; border: none; }
@@ -100,6 +106,7 @@
           <h4>MORE</h4>
           <a href="plans.html">📋 All Plans</a>
           <a href="workout-player.html">▶️ Guided Workout Player</a>
+          <a href="30-day-plan.html">📅 30-Day Plan</a>
         </div>
         <div class="mega-col highlight-card">
           <span class="hc-tag">FEATURED PLAN</span>
@@ -168,12 +175,12 @@
       <div class="wp-picker-card" onclick="location.href='workout-player.html?plan=musclebuilding'"><h3>💪 Muscle Building</h3><p>Beginner strength</p></div>
       <div class="wp-picker-card" onclick="location.href='workout-player.html?plan=generalfitness'"><h3>⚡ General Fitness</h3><p>Beginner mix</p></div>
       <div class="wp-picker-card" onclick="location.href='workout-player.html?plan=flexibility'"><h3>🧘 Flexibility</h3><p>Beginner stretch</p></div>
-      <div class="wp-picker-card" onclick="location.href='workout-player.html?muscle=chest'"><h3>Chest</h3><p>6-exercise session</p></div>
-      <div class="wp-picker-card" onclick="location.href='workout-player.html?muscle=back'"><h3>Back</h3><p>6-exercise session</p></div>
-      <div class="wp-picker-card" onclick="location.href='workout-player.html?muscle=legs'"><h3>Legs</h3><p>6-exercise session</p></div>
-      <div class="wp-picker-card" onclick="location.href='workout-player.html?muscle=arms'"><h3>Arms</h3><p>6-exercise session</p></div>
-      <div class="wp-picker-card" onclick="location.href='workout-player.html?muscle=core'"><h3>Core</h3><p>6-exercise session</p></div>
-      <div class="wp-picker-card" onclick="location.href='workout-player.html?muscle=fullbody'"><h3>Full Body</h3><p>6-exercise session</p></div>
+      <div class="wp-picker-card" onclick="location.href='workout-player.html?muscle=chest'"><h3>Chest</h3><p>10-exercise session</p></div>
+      <div class="wp-picker-card" onclick="location.href='workout-player.html?muscle=back'"><h3>Back</h3><p>10-exercise session</p></div>
+      <div class="wp-picker-card" onclick="location.href='workout-player.html?muscle=legs'"><h3>Legs</h3><p>10-exercise session</p></div>
+      <div class="wp-picker-card" onclick="location.href='workout-player.html?muscle=arms'"><h3>Arms</h3><p>10-exercise session</p></div>
+      <div class="wp-picker-card" onclick="location.href='workout-player.html?muscle=core'"><h3>Core</h3><p>10-exercise session</p></div>
+      <div class="wp-picker-card" onclick="location.href='workout-player.html?muscle=fullbody'"><h3>Full Body</h3><p>10-exercise session</p></div>
     </div>
   </div>
 
@@ -187,11 +194,23 @@
   <!-- PLAYER (active workout) -->
   <div id="wpPlayer" style="display:none;">
     <div class="wp-progress"><div class="wp-progress-fill" id="wpProgressFill"></div></div>
-    <div class="wp-phase-label" id="wpPhaseLabel">EXERCISE 1 OF 6</div>
+    <div class="wp-phase-label" id="wpPhaseLabel">EXERCISE 1 OF 10</div>
     <div class="wp-demo-wrap" id="wpDemoWrap"></div>
     <h2 id="wpExerciseName">—</h2>
     <div id="wpExerciseSub"></div>
-    <div class="wp-timer" id="wpTimer">0</div>
+
+    <!-- Shown for time-based exercises/rest -->
+    <div id="wpTimeMode">
+      <div class="wp-timer" id="wpTimer">0</div>
+    </div>
+
+    <!-- Shown for rep-based exercises -->
+    <div id="wpRepsMode" style="display:none;">
+      <div class="wp-reps-target" id="wpRepsTarget">12 reps</div>
+      <div class="wp-reps-hint">No timer — go at your own pace</div>
+      <button class="wp-done-btn" onclick="markRepsDone()">✓ Done — Next</button>
+    </div>
+
     <div class="wp-controls">
       <button class="wp-pause-btn" id="wpPauseBtn" onclick="pauseResume()">Pause</button>
       <button class="wp-skip-btn" onclick="skipPhase()">Skip</button>
@@ -209,75 +228,116 @@
 
 <script>
 // ===== EXERCISE DATA =====
+// mode: 'time' = countdown timer, 'reps' = no timer, just a target + Done button
 const PLAN_DATA = {
   fatloss: {
     beginner: [
-      {name:"Jumping Jacks", anim:"jump", sub:"3 x 30s", seconds:90},
-      {name:"Bodyweight Squats", anim:"squat", sub:"3 x 12", seconds:75},
-      {name:"Push-Ups", anim:"pushup", sub:"3 x 8", seconds:60},
-      {name:"Mountain Climbers", anim:"crawl", sub:"3 x 20s", seconds:60},
-      {name:"Plank", anim:"plank", sub:"3 x 20s", seconds:60}
+      {name:"Jumping Jacks", anim:"jump", mode:"time", seconds:90, sub:"3 x 30s"},
+      {name:"Bodyweight Squats", anim:"squat", mode:"reps", reps:36, sub:"3 x 12"},
+      {name:"Push-Ups", anim:"pushup", mode:"reps", reps:24, sub:"3 x 8"},
+      {name:"Mountain Climbers", anim:"crawl", mode:"time", seconds:60, sub:"3 x 20s"},
+      {name:"Plank", anim:"plank", mode:"time", seconds:60, sub:"3 x 20s"}
     ]
   },
   musclebuilding: {
     beginner: [
-      {name:"Incline Push-Ups", anim:"pushup", sub:"3 x 10", seconds:70},
-      {name:"Bodyweight Squats", anim:"squat", sub:"3 x 12", seconds:75},
-      {name:"Superman Hold", anim:"raise", sub:"3 x 15s", seconds:45},
-      {name:"Chair Dips", anim:"dip", sub:"3 x 10", seconds:60}
+      {name:"Incline Push-Ups", anim:"pushup", mode:"reps", reps:30, sub:"3 x 10"},
+      {name:"Bodyweight Squats", anim:"squat", mode:"reps", reps:36, sub:"3 x 12"},
+      {name:"Superman Hold", anim:"raise", mode:"time", seconds:45, sub:"3 x 15s"},
+      {name:"Chair Dips", anim:"dip", mode:"reps", reps:30, sub:"3 x 10"}
     ]
   },
   generalfitness: {
     beginner: [
-      {name:"Jumping Jacks", anim:"jump", sub:"2 x 30s", seconds:60},
-      {name:"Bodyweight Squats", anim:"squat", sub:"2 x 10", seconds:50},
-      {name:"Push-Ups", anim:"pushup", sub:"2 x 8", seconds:40},
-      {name:"Plank", anim:"plank", sub:"2 x 20s", seconds:40}
+      {name:"Jumping Jacks", anim:"jump", mode:"time", seconds:60, sub:"2 x 30s"},
+      {name:"Bodyweight Squats", anim:"squat", mode:"reps", reps:20, sub:"2 x 10"},
+      {name:"Push-Ups", anim:"pushup", mode:"reps", reps:16, sub:"2 x 8"},
+      {name:"Plank", anim:"plank", mode:"time", seconds:40, sub:"2 x 20s"}
     ]
   },
   flexibility: {
     beginner: [
-      {name:"Cat-Cow Stretch", anim:"stretch", sub:"2 x 10", seconds:50},
-      {name:"Standing Hamstring Stretch", anim:"stretch", sub:"2 x 20s/leg", seconds:80},
-      {name:"Shoulder Rolls", anim:"stretch", sub:"2 x 10", seconds:40}
+      {name:"Cat-Cow Stretch", anim:"stretch", mode:"reps", reps:20, sub:"2 x 10"},
+      {name:"Standing Hamstring Stretch", anim:"stretch", mode:"time", seconds:80, sub:"2 x 20s/leg"},
+      {name:"Shoulder Rolls", anim:"stretch", mode:"reps", reps:20, sub:"2 x 10"}
     ]
   }
 };
 
 const MUSCLE_DATA = {
   chest: [
-    {name:"Push-Ups", anim:"pushup"}, {name:"Incline Push-Ups", anim:"pushup"},
-    {name:"Wide Push-Ups", anim:"pushup"}, {name:"Diamond Push-Ups", anim:"pushup"},
-    {name:"Staggered Push-Ups", anim:"pushup"}, {name:"Decline Push-Ups", anim:"pushup"}
+    {name:"Push-Ups", anim:"pushup", mode:"reps", reps:12},
+    {name:"Incline Push-Ups", anim:"pushup", mode:"reps", reps:12},
+    {name:"Wide Push-Ups", anim:"pushup", mode:"reps", reps:12},
+    {name:"Diamond Push-Ups", anim:"pushup", mode:"reps", reps:10},
+    {name:"Staggered Push-Ups", anim:"pushup", mode:"reps", reps:10},
+    {name:"Spiderman Push-Ups", anim:"pushup", mode:"reps", reps:10},
+    {name:"Decline Push-Ups", anim:"pushup", mode:"reps", reps:10},
+    {name:"Archer Push-Ups", anim:"pushup", mode:"reps", reps:8},
+    {name:"Push-Up to Plank Reach", anim:"pushup", mode:"reps", reps:10},
+    {name:"Clap Push-Ups", anim:"pushup", mode:"reps", reps:8}
   ],
   back: [
-    {name:"Superman Hold", anim:"raise"}, {name:"Reverse Snow Angels", anim:"raise"},
-    {name:"Prone Y-Raises", anim:"raise"}, {name:"Towel Rows", anim:"pull"},
-    {name:"Doorframe Rows", anim:"pull"}, {name:"Scapular Pulls", anim:"pull"}
+    {name:"Superman Hold", anim:"raise", mode:"time", seconds:20},
+    {name:"Reverse Snow Angels", anim:"raise", mode:"reps", reps:12},
+    {name:"Prone Y-Raises", anim:"raise", mode:"reps", reps:12},
+    {name:"Prone Cobra", anim:"raise", mode:"time", seconds:20},
+    {name:"Towel Rows", anim:"pull", mode:"reps", reps:12},
+    {name:"Doorframe Rows", anim:"pull", mode:"reps", reps:12},
+    {name:"Face Pulls", anim:"pull", mode:"reps", reps:12},
+    {name:"Scapular Pulls", anim:"pull", mode:"reps", reps:12},
+    {name:"Pull-Ups", anim:"pull", mode:"reps", reps:6},
+    {name:"Renegade Rows", anim:"pull", mode:"reps", reps:10}
   ],
   legs: [
-    {name:"Bodyweight Squats", anim:"squat"}, {name:"Lunges", anim:"lunge"},
-    {name:"Glute Bridges", anim:"raise"}, {name:"Wall Sit", anim:"squat"},
-    {name:"Bulgarian Split Squats", anim:"lunge"}, {name:"Step-Ups", anim:"lunge"}
+    {name:"Bodyweight Squats", anim:"squat", mode:"reps", reps:15},
+    {name:"Lunges", anim:"lunge", mode:"reps", reps:12},
+    {name:"Glute Bridges", anim:"raise", mode:"reps", reps:15},
+    {name:"Calf Raises", anim:"squat", mode:"reps", reps:15},
+    {name:"Wall Sit", anim:"squat", mode:"time", seconds:30},
+    {name:"Bulgarian Split Squats", anim:"lunge", mode:"reps", reps:10},
+    {name:"Step-Ups", anim:"lunge", mode:"reps", reps:12},
+    {name:"Jump Squats", anim:"squat", mode:"reps", reps:12},
+    {name:"Curtsy Lunges", anim:"lunge", mode:"reps", reps:10},
+    {name:"Single-Leg Deadlift", anim:"lunge", mode:"reps", reps:10}
   ],
   arms: [
-    {name:"Chair Dips", anim:"dip"}, {name:"Wall/Table Curls", anim:"pull"},
-    {name:"Arm Circles", anim:"raise"}, {name:"Tricep Kickbacks", anim:"pull"},
-    {name:"Concentration Curls", anim:"pull"}, {name:"Pike Push-Ups", anim:"pushup"}
+    {name:"Chair Dips", anim:"dip", mode:"reps", reps:12},
+    {name:"Wall/Table Curls", anim:"pull", mode:"reps", reps:12},
+    {name:"Arm Circles", anim:"raise", mode:"time", seconds:20},
+    {name:"Tricep Kickbacks", anim:"pull", mode:"reps", reps:12},
+    {name:"Concentration Curls", anim:"pull", mode:"reps", reps:12},
+    {name:"Zottman Curls", anim:"pull", mode:"reps", reps:10},
+    {name:"Pike Push-Ups", anim:"pushup", mode:"reps", reps:10},
+    {name:"Plank Shoulder Taps", anim:"plank", mode:"reps", reps:16},
+    {name:"Diamond Push-Up Hold", anim:"plank", mode:"time", seconds:20},
+    {name:"Tricep Dips Off Floor", anim:"dip", mode:"reps", reps:10}
   ],
   core: [
-    {name:"Plank", anim:"plank"}, {name:"Dead Bug", anim:"twist"},
-    {name:"Side Plank", anim:"plank"}, {name:"Bicycle Crunches", anim:"twist"},
-    {name:"Russian Twists", anim:"twist"}, {name:"Leg Raises", anim:"raise"}
+    {name:"Plank", anim:"plank", mode:"time", seconds:30},
+    {name:"Dead Bug", anim:"twist", mode:"reps", reps:12},
+    {name:"Side Plank", anim:"plank", mode:"time", seconds:20},
+    {name:"Flutter Kicks", anim:"raise", mode:"time", seconds:20},
+    {name:"Bicycle Crunches", anim:"twist", mode:"reps", reps:20},
+    {name:"Russian Twists", anim:"twist", mode:"reps", reps:20},
+    {name:"Plank Jacks", anim:"jump", mode:"reps", reps:15},
+    {name:"Leg Raises", anim:"raise", mode:"reps", reps:12},
+    {name:"Hollow Body Hold", anim:"plank", mode:"time", seconds:25},
+    {name:"V-Ups", anim:"twist", mode:"reps", reps:12}
   ],
   fullbody: [
-    {name:"Burpees", anim:"jump"}, {name:"Mountain Climbers", anim:"crawl"},
-    {name:"Jumping Jacks", anim:"jump"}, {name:"High Knees", anim:"jump"},
-    {name:"Bear Crawl", anim:"crawl"}, {name:"Inchworms", anim:"crawl"}
+    {name:"Burpees", anim:"jump", mode:"reps", reps:10},
+    {name:"Mountain Climbers", anim:"crawl", mode:"time", seconds:20},
+    {name:"Jumping Jacks", anim:"jump", mode:"time", seconds:30},
+    {name:"High Knees", anim:"jump", mode:"time", seconds:20},
+    {name:"Bear Crawl", anim:"crawl", mode:"time", seconds:20},
+    {name:"Inchworms", anim:"crawl", mode:"reps", reps:8},
+    {name:"Skater Jumps", anim:"jump", mode:"reps", reps:12},
+    {name:"Squat to Press", anim:"squat", mode:"reps", reps:10},
+    {name:"Squat Thrusts", anim:"jump", mode:"reps", reps:10},
+    {name:"Star Jumps", anim:"jump", mode:"reps", reps:12}
   ]
 };
-
-const ANIM_SECONDS = { squat:40, pushup:35, plank:30, jump:30, lunge:40, pull:35, raise:30, dip:30, stretch:45, crawl:35, twist:35 };
 
 function stickFigureSVG() {
   return `<svg class="stick-figure" viewBox="0 0 120 140" xmlns="http://www.w3.org/2000/svg">
@@ -301,19 +361,16 @@ const muscleKey = params.get('muscle');
 let workoutList = [];
 let workoutTitle = '';
 let restSeconds = 20;
-let source = null;
 
 if (planKey && PLAN_DATA[planKey]) {
   const levelData = PLAN_DATA[planKey][levelKey] || PLAN_DATA[planKey]['beginner'];
   workoutList = levelData.map(e => ({...e}));
   workoutTitle = planKey.charAt(0).toUpperCase() + planKey.slice(1) + ' Plan';
   restSeconds = 20;
-  source = 'plan:' + planKey;
 } else if (muscleKey && MUSCLE_DATA[muscleKey]) {
-  workoutList = MUSCLE_DATA[muscleKey].map(e => ({...e, sub:'', seconds: ANIM_SECONDS[e.anim] || 40}));
+  workoutList = MUSCLE_DATA[muscleKey].map(e => ({...e}));
   workoutTitle = muscleKey.charAt(0).toUpperCase() + muscleKey.slice(1) + ' Session';
   restSeconds = 15;
-  source = 'muscle:' + muscleKey;
 }
 
 // ===== SHOW INTRO OR PICKER =====
@@ -321,14 +378,14 @@ if (workoutList.length > 0) {
   document.getElementById('wpPicker').style.display = 'none';
   document.getElementById('wpIntro').style.display = 'block';
   document.getElementById('wpIntroTitle').textContent = workoutTitle;
-  const totalWork = workoutList.reduce((sum,e) => sum + e.seconds, 0);
+  const timeEstimate = workoutList.reduce((sum,e) => sum + (e.mode === 'time' ? e.seconds : 40), 0);
   const totalRest = (workoutList.length - 1) * restSeconds;
-  const totalMin = Math.ceil((totalWork + totalRest) / 60);
+  const totalMin = Math.ceil((timeEstimate + totalRest) / 60);
   document.getElementById('wpIntroSub').textContent = `${workoutList.length} exercises • about ${totalMin} min`;
 }
 
-// ===== BEEP SOUND (Web Audio, no file needed) =====
-function playBeep() {
+// ===== SOUND EFFECTS (Web Audio, no files needed) =====
+function playTone(freq, duration, volume) {
   try {
     const ctx = new (window.AudioContext || window.webkitAudioContext)();
     const osc = ctx.createOscillator();
@@ -336,13 +393,16 @@ function playBeep() {
     osc.connect(gain);
     gain.connect(ctx.destination);
     osc.type = 'sine';
-    osc.frequency.value = 880;
-    gain.gain.setValueAtTime(0.3, ctx.currentTime);
-    gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.5);
+    osc.frequency.value = freq;
+    gain.gain.setValueAtTime(volume, ctx.currentTime);
+    gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + duration);
     osc.start();
-    osc.stop(ctx.currentTime + 0.5);
+    osc.stop(ctx.currentTime + duration);
   } catch (e) { /* audio not available, fail silently */ }
 }
+
+function playTick() { playTone(1200, 0.1, 0.2); }
+function playCompletionBeep() { playTone(700, 1.1, 0.35); }
 
 // ===== PLAYER STATE =====
 let currentIndex = 0;
@@ -362,11 +422,12 @@ function startWorkout() {
 function loadPhase() {
   const exercise = workoutList[currentIndex];
   const demoWrap = document.getElementById('wpDemoWrap');
-  const timerEl = document.getElementById('wpTimer');
   const phaseLabel = document.getElementById('wpPhaseLabel');
+  const timeModeEl = document.getElementById('wpTimeMode');
+  const repsModeEl = document.getElementById('wpRepsMode');
+  const timerEl = document.getElementById('wpTimer');
 
   if (currentPhase === 'work') {
-    remaining = exercise.seconds;
     demoWrap.innerHTML = stickFigureSVG();
     demoWrap.querySelector('.stick-figure').classList.add('anim-' + exercise.anim);
     document.getElementById('wpExerciseName').textContent = exercise.name;
@@ -374,19 +435,35 @@ function loadPhase() {
     phaseLabel.textContent = `EXERCISE ${currentIndex + 1} OF ${workoutList.length}`;
     phaseLabel.classList.remove('wp-rest-label');
     timerEl.classList.remove('resting');
+
+    if (exercise.mode === 'reps') {
+      timeModeEl.style.display = 'none';
+      repsModeEl.style.display = 'block';
+      document.getElementById('wpRepsTarget').textContent = exercise.reps + ' reps';
+      clearInterval(timerId);
+    } else {
+      timeModeEl.style.display = 'block';
+      repsModeEl.style.display = 'none';
+      remaining = exercise.seconds;
+      updateTimerDisplay();
+      runTimer();
+    }
   } else {
-    remaining = restSeconds;
+    // REST is always time-based
+    timeModeEl.style.display = 'block';
+    repsModeEl.style.display = 'none';
     demoWrap.innerHTML = '<div style="font-size:40px;">😮‍💨</div>';
     document.getElementById('wpExerciseName').textContent = 'Rest';
     document.getElementById('wpExerciseSub').textContent = 'Next up: ' + workoutList[currentIndex + 1].name;
     phaseLabel.textContent = 'RESTING';
     phaseLabel.classList.add('wp-rest-label');
     timerEl.classList.add('resting');
+    remaining = restSeconds;
+    updateTimerDisplay();
+    runTimer();
   }
 
   updateProgress();
-  updateTimerDisplay();
-  runTimer();
 }
 
 function updateProgress() {
@@ -397,7 +474,13 @@ function updateProgress() {
 }
 
 function updateTimerDisplay() {
-  document.getElementById('wpTimer').textContent = remaining;
+  const timerEl = document.getElementById('wpTimer');
+  timerEl.textContent = remaining;
+  if (remaining <= 5 && remaining > 0) {
+    timerEl.classList.add('ticking');
+  } else {
+    timerEl.classList.remove('ticking');
+  }
 }
 
 function runTimer() {
@@ -406,12 +489,20 @@ function runTimer() {
     if (isPaused) return;
     remaining--;
     updateTimerDisplay();
+    if (remaining > 0 && remaining <= 5) {
+      playTick();
+    }
     if (remaining <= 0) {
       clearInterval(timerId);
-      playBeep();
+      playCompletionBeep();
       advancePhase();
     }
   }, 1000);
+}
+
+function markRepsDone() {
+  playCompletionBeep();
+  advancePhase();
 }
 
 function advancePhase() {
@@ -431,7 +522,7 @@ function advancePhase() {
 
 function skipPhase() {
   clearInterval(timerId);
-  playBeep();
+  playCompletionBeep();
   advancePhase();
 }
 
@@ -441,18 +532,16 @@ function pauseResume() {
 }
 
 function finishWorkout() {
+  clearInterval(timerId);
   document.getElementById('wpPlayer').style.display = 'none';
   document.getElementById('wpComplete').style.display = 'block';
-  const totalSeconds = workoutList.reduce((s,e) => s + e.seconds, 0) + (workoutList.length - 1) * restSeconds;
-  const mins = Math.round(totalSeconds / 60);
-  document.getElementById('wpSummary').textContent = `${workoutList.length} exercises completed in about ${mins} minutes. Nice work.`;
+  document.getElementById('wpSummary').textContent = `${workoutList.length} exercises completed. Nice work.`;
 
-  // Log to tracker (same storage the Tracker page reads)
   const today = new Date().toISOString().split('T')[0];
   const data = JSON.parse(localStorage.getItem('trainlyTracker') || '{"workoutDates":[],"weightLog":[],"sessions":[]}');
   if (!data.workoutDates.includes(today)) data.workoutDates.push(today);
   if (!data.sessions) data.sessions = [];
-  data.sessions.push({ date: today, title: workoutTitle, exercises: workoutList.length, seconds: totalSeconds });
+  data.sessions.push({ date: today, title: workoutTitle, exercises: workoutList.length });
   localStorage.setItem('trainlyTracker', JSON.stringify(data));
 }
 </script>
